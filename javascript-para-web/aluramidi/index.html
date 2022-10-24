@@ -23,31 +23,54 @@
 
   <h1>Alura Midi</h1>
 
-  <section class="teclado">
+  <section class="aluramidi" data-trigger=".tecla">
 
-    <button class="tecla tecla_pom">Pom</button>
-    <button class="tecla tecla_clap">Clap</button>
-    <button class="tecla tecla_tim">Tim</button>
+    <audio class="sound-fx" src="sounds/keyq.wav" id="pom"></audio>
+    <button class="tecla" data-target="pom" type="button">
+      Pom
+    </button>
 
-    <button class="tecla tecla_puff">Puff</button>
-    <button class="tecla tecla_splash">Splash</button>
-    <button class="tecla tecla_toim">Toim</button>
+    <audio class="sound-fx" src="sounds/keyw.wav" id="clap"></audio>
+    <button class="tecla" data-target="clap" type="button">
+      Clap
+    </button>
 
-    <button class="tecla tecla_psh">Psh</button>
-    <button class="tecla tecla_tic">Tic</button>
-    <button class="tecla tecla_tom">Tom</button>
+    <audio class="sound-fx" src="sounds/keye.wav" id="tim"></audio>
+    <button class="tecla" data-target="tim" type="button">
+      Tim
+    </button>
+
+    <audio class="sound-fx" src="sounds/keya.wav" id="puff"></audio>
+    <button class="tecla" data-target="puff" type="button">
+      Puff
+    </button>
+
+    <audio class="sound-fx" src="sounds/keys.wav" id="splash"></audio>
+    <button class="tecla" data-target="splash" type="button">
+      Splash
+    </button>
+
+    <audio class="sound-fx" src="sounds/keyd.wav" id="toim"></audio>
+    <button class="tecla" data-target="toim" type="button">
+      Toim
+    </button>
+
+    <audio class="sound-fx" src="sounds/keyz.wav" id="psh"></audio>
+    <button class="tecla" data-target="psh" type="button">
+      Psh
+    </button>
+
+    <audio class="sound-fx" src="sounds/keyx.wav" id="tic"></audio>
+    <button class="tecla" data-target="tic" type="button">
+      Tic
+    </button>
+
+    <audio class="sound-fx" src="sounds/keyc.wav" id="tom"></audio>
+    <button class="tecla" data-target="tom" type="button">
+      Tom
+    </button>
 
   </section>
-
-  <audio src="sounds/keyq.wav" id="som_tecla_pom"></audio>
-  <audio src="sounds/keyw.wav" id="som_tecla_clap"></audio>
-  <audio src="sounds/keye.wav" id="som_tecla_tim"></audio>
-  <audio src="sounds/keya.wav" id="som_tecla_puff"></audio>
-  <audio src="sounds/keys.wav" id="som_tecla_splash"></audio>
-  <audio src="sounds/keyd.wav" id="som_tecla_toim"></audio>
-  <audio src="sounds/keyz.wav" id="som_tecla_psh"></audio>
-  <audio src="sounds/keyx.wav" id="som_tecla_tic"></audio>
-  <audio src="sounds/keyc.wav" id="som_tecla_tom"></audio>
 
   <script src="js/main.js" async type="text/javascript"></script>
 
