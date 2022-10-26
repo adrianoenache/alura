@@ -44,6 +44,7 @@ h1 {
   color: var(--vermelha);
   cursor: pointer;
   height: 120px;
+  font-family: inherit;
   font-size: 1.75em;
   font-weight: bold;
   line-height: 120px;
