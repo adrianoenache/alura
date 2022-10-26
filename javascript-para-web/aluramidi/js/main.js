@@ -26,7 +26,7 @@ const $getMySelectors = ($targets) => {
 
 }
 
-const checkMySelector = ($target) => {
+const checkIfMySelectorIsString = ($target) => {
 
   if(typeof $target === 'string') {
 
@@ -42,7 +42,7 @@ const checkMySelector = ($target) => {
 
 const addCssClass = ($target, cssClass) => {
 
-  let _target = checkMySelector($target);
+  let _target = checkIfMySelectorIsString($target);
 
   if(!_target.classList.contains(cssClass)) {
 
@@ -54,7 +54,7 @@ const addCssClass = ($target, cssClass) => {
 
 const removeCssClass = ($target, cssClass) => {
 
-  let _target = checkMySelector($target);
+  let _target = checkIfMySelectorIsString($target);
 
   if(_target.classList.contains(cssClass)) {
 
@@ -108,8 +108,8 @@ const playSound = ($target) => {
   let audioPath = $getMySelector(_target).src;
   let audioFx = new Audio(audioPath);
 
-  audioFx.play();
   //$getMySelector(_target).play();
+  audioFx.play();
 
 }
 
