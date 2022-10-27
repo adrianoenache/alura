@@ -1,3 +1,8 @@
+/*
+
+  Criado variáveis para todas as cores e alguns elementos globais.
+
+*/
 :root {
   --color-0: #000;
   --color-1: #fff;
@@ -15,19 +20,51 @@
   --spacing: calc(var(--radius) / 3);
 }
 
+/*
+
+  Removido reset customizado da Alura e adicionado aqui regra global do box-sizing.
+
+*/
 * {
   box-sizing: border-box;
 }
 
+/*
+
+  Alterado font-size para facilitar a leitura e entendimento dos
+  valores de rem 1rem = 10px, 1.6rem = 16px, 3.2rem = 32px, ...
+
+*/
 html {
   font-size: 10px;
 }
 
+/*
+
+  Removido propriedades que podem ser reaproveitadas em outros
+  elementos através do uso de classes dinâmicas como ferramenta.
+
+*/
 body {
   font-family: 'Montserrat', sans-serif;
   min-height: 100vh;
 }
 
+/*
+
+  Classe de CSS dinãmina permite que suas propriedades possam ser
+  alteradas comforme o contexto (escopo) de onde são aplicadas.
+
+  Isso é possível devido a função do CSS var() que faz a invocação
+  da variável CSS, e que permite um valor e um fallback
+  var([valor], [fallback]). Isso faz com que quando o valor não é encontrado
+  ou declarado em seu contexto a função use o valor de fallback.
+
+  Para este uso recomendo como nome da variável usar uma sigla que
+  identifique a propriedade. Isso no final faz com que o CSS gerado seja
+  mais leve aumentando a performance.
+
+*/
 .flex {
   align-items: var(--ali, center);
   display: var(--dp, flex);
@@ -35,10 +72,47 @@ body {
   justify-content: var(--jc, center);
 }
 
+/*
+
+  Neste caso os pontos de acesso desta classe dinâmica não são as
+  propriedades, mas valores dentro da função CSS linear-gradient()
+  isso faz com que seja possível alterar o gradiente, apenas
+  declarando as variáveis no escopo que que a classe esta aplicada.
+  Neste caso a classe .aluramidi esta sobrescrevendo os valores de
+  .gradient o ideal seria fazer isso através de um seletor mais forte
+  criando o escopo pela classe de componente ex.:
+
+  .aluramidi .gradient {
+    --gradient-direction: to bottom;
+    --gradient-first-color: var(--color-5);
+    --gradient-last-color: var(--color-4);
+  }
+
+  Isso evitaria bug possiveis bugs.
+
+*/
 .gradient {
   background-image: linear-gradient(var(--gradient-direction, 45deg), var(--gradient-first-color, var(--color-9)) 0%, var(--gradient-last-color, var(--color-8)) 100%);
 }
 
+
+/*
+
+  Foi criado uma classe para o titulo principal e uma segunda camada
+  de variável de componente para acessar as variáveis globais. Desta
+  forma trona-se possível, neste caso, customizar a cor deste átomo
+  através de sobrecarga de escopo alterando o valor da variável de
+  componente sem alterar as variaveis globais ex.:
+
+  .meu-componente .main-title {
+    --main-title-color: var(--color-0);
+  }
+
+  Isso já seria o suficiente para se criar uma variação de aplicação
+  do átomo .main-title dentro de outro escopo alterando apenas a
+  variável do componente.
+
+*/
 .main-title {
   --main-title-color: var(--color-1);
   color: var(--main-title-color);
@@ -46,6 +120,15 @@ body {
   margin-bottom: 20px;
 }
 
+/*
+
+  No elemento HTML esta aplicado a classe dinâmica .gradient junto
+  da .aluramidi .isso dá acesso a classe .aluramidi configurar as
+  variáveis de .gradient alterando seu comportamento. Apesar disto
+  ser possível, é mais seguro fazer através do escopo de uma classe
+  de componente.
+
+*/
 .aluramidi {
   --gradient-direction: to bottom;
   --gradient-first-color: var(--color-5);
@@ -60,6 +143,14 @@ body {
   padding: var(--spacing);
 }
 
+/*
+
+  Neste átomo foram criadas variáveis que alteram estados como hover,
+  active e focus. --bgc-d se lê background-color-default, poderia se usar
+  os nomes em sua versão extendida, mas o uso de siglas para os nomes das
+  propriedades vai ter um grande inpacto no peso do CSS final.
+
+*/
 .tecla {
   --bgc-d: var(--color-1);
   --bgc-a: var(--color-7);
@@ -96,6 +187,19 @@ body {
   outline: 0;
 }
 
+/*
+
+  Note que os nos estados abaixo não são deficnidas as propriedades,
+  aqui são feitas as conexões das váriáveis de propriedades com as
+  variáveis de estado. E as configurações dos estados ficam todas
+  no mesmo lugar facilitando a alteração.
+
+  Neste caso não foi criado uma variável de estado para o
+  transition-duration, mas foi feito de forma que o valor possa ser
+  customizado se necessário, o que acontece logo abaixo no estado
+  active do elemento.
+
+*/
 .tecla:is(:active, .ativa) {
   --bgc: var(--bgc-a);
   --bsd: var(--bsd-a);
