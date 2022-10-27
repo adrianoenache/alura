@@ -1,73 +1,112 @@
 :root {
-  --cinza: #aaa;
-  --vermelha: #e93d50;
-  --vermelha-escura: #af303f;
-  --branca: #fff;
-  --luz: rgb(229, 255, 0);
+  --color-0: #000;
+  --color-1: #fff;
+  --color-2: #666;
+  --color-3: #aaa;
+  --color-4: #ccc;
+  --color-5: #eee;
+  --color-6: #af303f;
+  --color-7: #e93d50;
+  --color-8: #23538a;
+  --color-9: #a7cfdf;
+  --color-10: #e5ff00;
+  --tecla-size: 90px;
+  --radius: calc(var(--tecla-size) / 3);
+  --spacing: calc(var(--radius) / 3);
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  font-size: 10px;
+}
+
 body {
-  align-items: center;
-  background: linear-gradient(45deg, #a7cfdf 0%,#23538a 100%);
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   font-family: 'Montserrat', sans-serif;
   min-height: 100vh;
 }
 
-h1 {
-  color: var(--branca);
+.flex {
+  align-items: var(--ali, center);
+  display: var(--dp, flex);
+  flex-direction: var(--fd, column);
+  justify-content: var(--jc, center);
+}
+
+.gradient {
+  background-image: linear-gradient(var(--gradient-direction, 45deg), var(--gradient-first-color, var(--color-9)) 0%, var(--gradient-last-color, var(--color-8)) 100%);
+}
+
+.main-title {
+  --main-title-color: var(--color-1);
+  color: var(--main-title-color);
+  font-size: 3.2rem;
   margin-bottom: 20px;
-  font-size: 2rem;
 }
 
 .aluramidi {
-  background: linear-gradient(to bottom, #eeeeee 0%,#cccccc 100%);
-  box-shadow: 6px 8px 0 6px #666, 10px 10px 10px #000;
-  border-radius: 30px;
+  --gradient-direction: to bottom;
+  --gradient-first-color: var(--color-5);
+  --gradient-last-color: var(--color-4);
+  --first-shadow: var(--color-2);
+  --second-shadow: var(--color-0);
+  border-radius: var(--radius);
+  box-shadow: 6px 8px 0 6px var(--first-shadow), 10px 10px 10px var(--second-shadow);
   display: grid;
-  gap: 10px;
+  gap: var(--spacing);
   grid-template-columns: repeat(3, 1fr);
-  padding: 10px;
+  padding: var(--spacing);
 }
 
 .tecla {
-  background-color: var(--branca);
-  border: none;
-  border-radius: 30px;
-  box-shadow: 3px 3px 0 var(--cinza);
-  color: var(--vermelha);
+  --bgc-d: var(--color-1);
+  --bgc-a: var(--color-7);
+  --bgc: var(--bgc-d);
+  --bsd-d: 3px 3px 0 var(--color-3);
+  --bsd-a: 3px 3px 0 var(--color-6) inset;
+  --bsd-hf: 1px 1px 10px var(--color-10);
+  --bsd-ahf: var(--bsd-a), var(--bsd-hf);
+  --bsd: var(--bsd-d);
+  --c-d: var(--color-7);
+  --c-a: var(--color-1);
+  --c: var(--c-d);
+  background-color: var(--bgc);
+  border-radius: var(--radius);
+  border-color: var(--bgc);
+  border-style: solid;
+  border-width: 4px;
+  box-shadow: var(--bsd);
+  color: var(--c);
   cursor: pointer;
-  height: 120px;
   font-family: inherit;
-  font-size: 1.75em;
+  font-size: calc(var(--spacing) * 2);
   font-weight: bold;
-  line-height: 120px;
+  height: var(--tecla-size);
+  line-height: var(--tecla-size);
   text-align: center;
-  width: 120px;
+  transition-duration: var(--tsd, .25s);
+  transition-property: background-color, border-color, color;
+  transition-timing-function: ease;
+  width: var(--tecla-size);
 }
 
-.tecla.ativa,
-.tecla:active {
-  background-color: var(--vermelha);
-  border: 4px solid  var(--vermelha);
-  box-shadow: 3px 3px 0 var(--vermelha-escura) inset;
-  color: var(--branca);
-  outline: none;
-}
-
-.tecla.focus,
 .tecla:focus {
-  outline: none;
-  box-shadow: 1px 1px 10px var(--luz);
+  outline: 0;
 }
 
-.tecla.active:focus,
-.tecla:active:focus {
-  box-shadow: 3px 3px 0 var(--vermelha-escura) inset, 1px 1px 10px var(--luz);
+.tecla:is(:active, .ativa) {
+  --bgc: var(--bgc-a);
+  --bsd: var(--bsd-a);
+  --c: var(--c-a);
+  --tsd: .15s;
+}
+
+.tecla:is(:hover, :focus) {
+  --bsd: var(--bsd-hf);
+}
+
+.tecla:is(:active:hover, .ativa:hover, :active:focus, .ativa:focus){
+  --bsd: var(--bsd-ahf);
 }
