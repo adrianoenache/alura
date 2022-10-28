@@ -79,10 +79,19 @@ body {
   isso faz com que seja possível alterar o gradiente, apenas
   declarando as variáveis no escopo que que a classe esta aplicada.
   Neste caso a classe .aluramidi esta sobrescrevendo os valores de
-  .gradient o ideal seria fazer isso através de um seletor mais forte
-  criando o escopo pela classe de componente ex.:
+  .gradient, o ideal seria fazer isso através de um seletor mais
+  forte criando o escopo pela classe de componente ex.:
 
-  .aluramidi .gradient {
+  .meu-componente .gradient {
+    --gradient-direction: to bottom;
+    --gradient-first-color: var(--color-5);
+    --gradient-last-color: var(--color-4);
+  }
+
+  Ou neste caso específico o seletor seria desta forma, pois a classe
+  dinâmica esta aplicada junto da classe do componente.
+
+  .aluramidi.gradient {
     --gradient-direction: to bottom;
     --gradient-first-color: var(--color-5);
     --gradient-last-color: var(--color-4);
@@ -95,7 +104,6 @@ body {
   background-image: linear-gradient(var(--gradient-direction, 45deg), var(--gradient-first-color, var(--color-9)) 0%, var(--gradient-last-color, var(--color-8)) 100%);
 }
 
-
 /*
 
   Foi criado uma classe para o titulo principal e uma segunda camada
@@ -106,6 +114,10 @@ body {
 
   .meu-componente .main-title {
     --main-title-color: var(--color-0);
+  }
+
+  .meu-componente .main-title.red {
+    --main-title-color: var(--color-6);
   }
 
   Isso já seria o suficiente para se criar uma variação de aplicação

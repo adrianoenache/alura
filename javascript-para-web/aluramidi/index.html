@@ -35,6 +35,18 @@
     página através de um pequeno JS inline. Como fallback também foram criadas as chamadas de CSS
     dentro da tag noscript.
 
+    Outra mudança importante foi com relação ao Google Fonts, o google mudou a API, e não é possivel
+    selecionar somente o carregamento da fonte com os caracteres Latin por exemplo. Mas em contra
+    partida eles adicionaram um parametro de query string, que lhe permite selecionar quais caracteres
+    o pacote de fonte deve ter. E isso tráz um impacto ainda melhor no tamanho do arquivo da fonte,
+    indo de 31Kb para 7.1Kb. Mas da para ficar melhor, se você quebrar o request da fonte em dois para
+    carregar de forma idependente cada variação e configurando os caracters que cada uma usa a variação
+    400 fica com um tamanho de arquivo de 1.4Kb e a variação 700 fica com um tamanho de arquivo de 2.1Kb.
+
+    Outra forma de se obter fontes custumizadas com boa performance e utilizar a ferramenta do site fontsquirrel,
+    seu webfont generator é poderoso com muitas configurações incluindo também a possibilidade de escolher
+    os caracteres que o pacote da fonte vai ter.
+
   -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
@@ -45,6 +57,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin>
 
+  <!--
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap&text=%20AluraMid" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap&text=acCfhilmopPsSTu" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  -->
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&text=%20aAcCdeEfhilmMnopPQrsStTuWXZ" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="css/estilos.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
