@@ -5,7 +5,7 @@
 
   <!--
 
-    Foi removido a meta tag de compatibilidade com o IE por não ser mais necessária. O IE esta morto.
+    Foi removido a meta tag de compatibilidade com o IE por não ser mais necessária. O IE está morto.
 
   -->
   <meta charset="UTF-8">
@@ -13,8 +13,8 @@
 
   <!--
 
-    Foram adicionadas as meta tags de description, keywords e author. Os testes do Lighthouse acusou
-    a falta da meta tag description e sua adicção melhora a pontuação de SEO.
+    Foram adicionadas as meta tags de description, keywords e author. Os testes do Lighthouse acusaram
+    a falta da meta tag description e sua adição melhora a pontuação de SEO.
 
   -->
 	<meta name="description" content="Esta página é um exercício do curso Alura, Javascript para web, criando páginas dinâmicas. Exercício Alura Midi.">
@@ -30,20 +30,20 @@
     A chamada do JS é carregada no final da página e nela foi adicionado os atributos async e type.
 
     Para as chamadas de CSS foram criados os links de preconnect e como fallback para eles os de
-    dns-prefetch, para melhoria do carregamento destes assets. Também esta sendo abordado a tecnica
+    dns-prefetch, para melhoria do carregamento destes assets. Também está sendo abordado a tecnica
     do Critical CSS e fazendo com que o CSS seja carregado usando preload e aplicado após o load da
     página através de um pequeno JS inline. Como fallback também foram criadas as chamadas de CSS
     dentro da tag noscript.
 
-    Outra mudança importante foi com relação ao Google Fonts, o google mudou a API, e não é possivel
+    Outra mudança importante foi com relação ao Google Fonts, o google mudou a API, e não é possível
     selecionar somente o carregamento da fonte com os caracteres Latin por exemplo. Mas em contra
-    partida eles adicionaram um parametro de query string, que lhe permite selecionar quais caracteres
-    o pacote de fonte deve ter. E isso tráz um impacto ainda melhor no tamanho do arquivo da fonte,
+    partida eles adicionaram um parâmetro de query string, que lhe permite selecionar quais caracteres
+    o pacote de fonte deve ter. E isso traz um impacto ainda melhor no tamanho do arquivo da fonte,
     indo de 31Kb para 7.1Kb. Mas da para ficar melhor, se você quebrar o request da fonte em dois para
-    carregar de forma idependente cada variação e configurando os caracters que cada uma usa a variação
+    carregar de forma independente cada variação e configurando os caracteres que cada uma usa a variação
     400 fica com um tamanho de arquivo de 1.4Kb e a variação 700 fica com um tamanho de arquivo de 2.1Kb.
 
-    Outra forma de se obter fontes custumizadas com boa performance e utilizar a ferramenta do site fontsquirrel,
+    Outra forma de se obter fontes customizadas com boa performance e utilizar a ferramenta do site fontsquirrel,
     seu webfont generator é poderoso com muitas configurações incluindo também a possibilidade de escolher
     os caracteres que o pacote da fonte vai ter.
 
@@ -80,7 +80,7 @@
 
   <!--
 
-    Critical CSS foi criado a partir da análize de cobertura no devtools do navegador.
+    Critical CSS foi criado a partir da análise de cobertura no devtools do navegador.
 
   -->
   <style type="text/css">
@@ -97,11 +97,11 @@
 
     <!--
 
-      Os arquivos de audio foram convertidos de .wav para .aac usando a ferramenta
+      Os arquivos de áudio foram convertidos de .wav para .aac usando a ferramenta
       de linha de comando ffmpeg, diminuindo o tamanho dos arquivos consequentemente
-      aumentendo a performance.
+      aumentando a performance.
 
-      Ao invés de usar uma classe para fazer o link entre as tags audio e button foi
+      Ao invés de usar uma classe para fazer o link entre as tags áudio e button foi
       usado um atributo data para essa finalidade.
 
     -->
@@ -153,7 +153,9 @@
   </section>
 
   <!--
+
     Chamada do JS com async executado no final.
+
   -->
   <script src="js/main.min.js" async type="text/javascript"></script>
 
