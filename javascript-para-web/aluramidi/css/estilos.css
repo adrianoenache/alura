@@ -41,7 +41,7 @@ html {
 
 /*
 
-  Removido propriedades que podem ser reaproveitadas em outros
+  Removidas as propriedades que podem ser reaproveitadas em outros
   elementos através do uso de classes dinâmicas como ferramenta.
 
 */
@@ -52,8 +52,8 @@ body {
 
 /*
 
-  Classe de CSS dinãmina permite que suas propriedades possam ser
-  alteradas comforme o contexto (escopo) de onde são aplicadas.
+  Classe de CSS dinâmica permite que suas propriedades possam ser
+  alteradas conforme o contexto (escopo) de onde são aplicadas.
 
   Isso é possível devido a função do CSS var() que faz a invocação
   da variável CSS, e que permite um valor e um fallback
@@ -77,8 +77,8 @@ body {
   Neste caso os pontos de acesso desta classe dinâmica não são as
   propriedades, mas valores dentro da função CSS linear-gradient()
   isso faz com que seja possível alterar o gradiente, apenas
-  declarando as variáveis no escopo que que a classe esta aplicada.
-  Neste caso a classe .aluramidi esta sobrescrevendo os valores de
+  declarando as variáveis no escopo que que a classe está aplicada.
+  Neste caso a classe .aluramidi está sobrescrevendo os valores de
   .gradient, o ideal seria fazer isso através de um seletor mais
   forte criando o escopo pela classe de componente ex.:
 
@@ -89,7 +89,7 @@ body {
   }
 
   Ou neste caso específico o seletor seria desta forma, pois a classe
-  dinâmica esta aplicada junto da classe do componente.
+  dinâmica está aplicada junto da classe do componente.
 
   .aluramidi.gradient {
     --gradient-direction: to bottom;
@@ -97,7 +97,7 @@ body {
     --gradient-last-color: var(--color-4);
   }
 
-  Isso evitaria bug possiveis bugs.
+  Isso evitaria bug possíveis bugs.
 
 */
 .gradient {
@@ -106,11 +106,11 @@ body {
 
 /*
 
-  Foi criado uma classe para o titulo principal e uma segunda camada
-  de variável de componente para acessar as variáveis globais. Desta
+  Foi criado uma classe para o título principal e uma segunda camada
+  de variável de componentes para acessar as variáveis globais. Desta
   forma trona-se possível, neste caso, customizar a cor deste átomo
   através de sobrecarga de escopo alterando o valor da variável de
-  componente sem alterar as variaveis globais ex.:
+  componente sem alterar as variáveis globais ex.:
 
   .meu-componente .main-title {
     --main-title-color: var(--color-0);
@@ -134,7 +134,7 @@ body {
 
 /*
 
-  No elemento HTML esta aplicado a classe dinâmica .gradient junto
+  No elemento HTML está aplicado a classe dinâmica .gradient junto
   da .aluramidi .isso dá acesso a classe .aluramidi configurar as
   variáveis de .gradient alterando seu comportamento. Apesar disto
   ser possível, é mais seguro fazer através do escopo de uma classe
@@ -159,8 +159,8 @@ body {
 
   Neste átomo foram criadas variáveis que alteram estados como hover,
   active e focus. --bgc-d se lê background-color-default, poderia se usar
-  os nomes em sua versão extendida, mas o uso de siglas para os nomes das
-  propriedades vai ter um grande inpacto no peso do CSS final.
+  os nomes em sua versão estendida, mas o uso de siglas para os nomes das
+  propriedades vai ter um grande impacto no peso do CSS final.
 
 */
 .tecla {
@@ -201,8 +201,8 @@ body {
 
 /*
 
-  Note que os nos estados abaixo não são deficnidas as propriedades,
-  aqui são feitas as conexões das váriáveis de propriedades com as
+  Note que os nos estados abaixo não são definidas as propriedades,
+  aqui são feitas as conexões das variáveis de propriedades com as
   variáveis de estado. E as configurações dos estados ficam todas
   no mesmo lugar facilitando a alteração.
 
