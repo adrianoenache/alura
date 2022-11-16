@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <!--
+
+    Foi removido a meta tag de compatibilidade com o IE por não ser mais necessária. O IE está morto.
+
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--
+
+    Foram adicionadas as meta tags de description, keywords e author. Os testes do Lighthouse acusaram
+    a falta da meta tag description e sua adição melhora a pontuação de SEO.
+
+  -->
+	<meta name="description" content="Esta página é um exercício do curso Alura, Javascript para web, criando páginas dinâmicas. Exercício Alura Midi.">
+	<meta name="keywords" content="Front-End, HTML, CSS, Javascript, Alura, Cursos">
+	<meta name="author" content="Adriano Enache - adrianoenache@hotmail.com">
+
+  <title>Alura MIDI</title>
+
+  <!--
+
+    Os carregamentos dos assets de CSS e JS foram remodelados por completo.
+
+    A chamada do JS é carregada no final da página e nela foi adicionado os atributos async e type.
+
+    Para as chamadas de CSS foram criados os links de preconnect e como fallback para eles os de
+    dns-prefetch, para melhoria do carregamento destes assets. Também está sendo abordado a tecnica
+    do Critical CSS e fazendo com que o CSS seja carregado usando preload e aplicado após o load da
+    página através de um pequeno JS inline. Como fallback também foram criadas as chamadas de CSS
+    dentro da tag noscript.
+
+    Outra mudança importante foi com relação ao Google Fonts, o google mudou a API, e não é possível
+    selecionar somente o carregamento da fonte com os caracteres Latin por exemplo. Mas em contra
+    partida eles adicionaram um parâmetro de query string, que lhe permite selecionar quais caracteres
+    o pacote de fonte deve ter. E isso traz um impacto ainda melhor no tamanho do arquivo da fonte,
+    indo de 31Kb para 7.1Kb. Mas da para ficar melhor, se você quebrar o request da fonte em dois para
+    carregar de forma independente cada variação e configurando os caracteres que cada uma usa a variação
+    400 fica com um tamanho de arquivo de 1.4Kb e a variação 700 fica com um tamanho de arquivo de 2.1Kb.
+
+    Outra forma de se obter fontes customizadas com boa performance e utilizar a ferramenta do site fontsquirrel,
+    seu webfont generator é poderoso com muitas configurações incluindo também a possibilidade de escolher
+    os caracteres que o pacote da fonte vai ter.
+
+  -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin>
+
+  <!--
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap&text=%20AluraMid" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap&text=acCfhilmopPsSTu" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&text=%20aAcCdeEfhilmMnopPQrsStTuWXZ" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="css/estilos.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+  <noscript>
+    <link rel="stylesheet" type="text/css" media="only screen" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&text=%20aAcCdeEfhilmMnopPQrsStTuWXZ">
+    <link rel="stylesheet" type="text/css" media="only screen" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <link rel="stylesheet" type="text/css" media="only screen" href="css/estilos.min.css">
+  </noscript>
+
+  <!--
+
+    Foi alterado o tamanho da imagem usada para favicon e comprimida com o tinypng.
+
+  -->
+  <link rel="icon" type="image/png" href="images/bateria-w64.png">
+
+  <!--
+
+    Critical CSS foi criado a partir da análise de cobertura no devtools do navegador.
+
+  -->
+  <style type="text/css">
+    a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,main,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section{display:block}body{line-height:1}table{border-collapse:collapse;border-spacing:0}:root{--color-0:#000;--color-1:#fff;--color-2:#666;--color-3:#aaa;--color-4:#ccc;--color-5:#eee;--color-6:#af303f;--color-7:#e93d50;--color-8:#23538a;--color-9:#a7cfdf;--color-10:#e5ff00;--tecla-size:90px;--radius:calc(var(--tecla-size)/3);--spacing:calc(var(--radius)/3)}*{box-sizing:border-box}html{font-size:10px}body{font-family:'Montserrat',sans-serif;min-height:100vh}.flex{align-items:var(--ali,center);display:var(--dp,flex);flex-direction:var(--fd,column);justify-content:var(--jc,center)}.gradient{background-image:linear-gradient(var(--gradient-direction,45deg),var(--gradient-first-color,var(--color-9)) 0%,var(--gradient-last-color,var(--color-8)) 100%)}.main-title{--main-title-color:var(--color-1);color:var(--main-title-color);font-size:3.2rem;margin-bottom:20px}.aluramidi{--gradient-direction:to bottom;--gradient-first-color:var(--color-5);--gradient-last-color:var(--color-4);--first-shadow:var(--color-2);--second-shadow:var(--color-0);border-radius:var(--radius);box-shadow:6px 8px 0 6px var(--first-shadow),10px 10px 10px var(--second-shadow);display:grid;gap:var(--spacing);grid-template-columns:repeat(3,1fr);padding:var(--spacing)}.tecla{--bgc-d:var(--color-1);--bgc-a:var(--color-7);--bgc:var(--bgc-d);--bsd-d:3px 3px 0 var(--color-3);--bsd-a:3px 3px 0 var(--color-6) inset;--bsd-hf:1px 1px 10px var(--color-10);--bsd-ahf:var(--bsd-a),var(--bsd-hf);--bsd:var(--bsd-d);--c-d:var(--color-7);--c-a:var(--color-1);--c:var(--c-d);background-color:var(--bgc);border-radius:var(--radius);border-color:var(--bgc);border-style:solid;border-width:4px;box-shadow:var(--bsd);color:var(--c);cursor:pointer;font-family:inherit;font-size:calc(var(--spacing)*2);font-weight:700;height:var(--tecla-size);line-height:var(--tecla-size);text-align:center;transition-duration:var(--tsd,.25s);transition-property:background-color,border-color,color;transition-timing-function:ease;width:var(--tecla-size)}
+  </style>
+
+</head>
+
+<body class="gradient flex">
+
+  <h1 class="main-title">Alura Midi</h1>
+
+  <section class="aluramidi gradient" data-trigger=".tecla">
+
+    <!--
+
+      Os arquivos de áudio foram convertidos de .wav para .aac usando a ferramenta
+      de linha de comando ffmpeg, diminuindo o tamanho dos arquivos consequentemente
+      aumentando a performance.
+
+      Ao invés de usar uma classe para fazer o link entre as tags áudio e button foi
+      usado um atributo data para essa finalidade.
+
+    -->
+    <audio class="sound-fx" id="pom" src="sounds/keyq.aac"></audio>
+    <button class="tecla" data-target="pom" type="button" title="Pressione a tecla Q">
+      Pom
+    </button>
+
+    <audio class="sound-fx" id="clap" src="sounds/keyw.aac"></audio>
+    <button class="tecla" data-target="clap" type="button" title="Pressione a tecla W">
+      Clap
+    </button>
+
+    <audio class="sound-fx" id="tim" src="sounds/keye.aac"></audio>
+    <button class="tecla" data-target="tim" type="button" title="Pressione a tecla E">
+      Tim
+    </button>
+
+    <audio class="sound-fx" id="puff" src="sounds/keya.aac"></audio>
+    <button class="tecla" data-target="puff" type="button" title="Pressione a tecla A">
+      Puff
+    </button>
+
+    <audio class="sound-fx" id="splash" src="sounds/keys.aac"></audio>
+    <button class="tecla" data-target="splash" type="button" title="Pressione a tecla S">
+      Splash
+    </button>
+
+    <audio class="sound-fx" id="toim" src="sounds/keyd.aac"></audio>
+    <button class="tecla" data-target="toim" type="button" title="Pressione a tecla D">
+      Toim
+    </button>
+
+    <audio class="sound-fx" id="psh" src="sounds/keyz.aac"></audio>
+    <button class="tecla" data-target="psh" type="button" title="Pressione a tecla Z">
+      Psh
+    </button>
+
+    <audio class="sound-fx" id="tic" src="sounds/keyx.aac"></audio>
+    <button class="tecla" data-target="tic" type="button" title="Pressione a tecla X">
+      Tic
+    </button>
+
+    <audio class="sound-fx" id="tom" src="sounds/keyc.aac"></audio>
+    <button class="tecla" data-target="tom" type="button" title="Pressione a tecla C">
+      Tom
+    </button>
+
+  </section>
+
+  <!--
+
+    Chamada do JS com async executado no final.
+
+  -->
+  <script src="js/main.min.js" async type="text/javascript"></script>
+
+</body>
+
+</html>
