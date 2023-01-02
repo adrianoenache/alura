@@ -6,7 +6,7 @@ function executa(event) {
 	var valores 	 = pegaValoresDoForm();
 
     var resultados 	 = executaRegex(valores);
-
+    
     imprimeResultadoNoInput(resultados);
     highlightResultados(resultados, valores.target);
 }
@@ -69,10 +69,10 @@ function imprimeResultadoNoInput(resultados) {
 
     labelResultado.innerHTML = (resultados.length) + " Matches (resultados)";
 
-	var resultadosComoArray = resultados.map(function(item){
+	var resultadosComoArray = resultados.map(function(item){ 
 		return item.resultado;
 	});
-
+	
 	labelResultado.innerHTML = (resultadosComoArray.length) + " Matches (resultados)";
 
     if(resultadosComoArray.length > 0) {
@@ -88,7 +88,7 @@ function imprimeResultadoNoInput(resultados) {
 }
 
 
-function highlightResultados(resultados, texto) {
+function highlightResultados(resultados, texto) {	
 	var item = null;
 	var indexBegin = 0;
 	var conteudo = "";
@@ -103,7 +103,7 @@ function highlightResultados(resultados, texto) {
 	if((texto.length - indexBegin) > 0) {
 		conteudo += semHighlight(escapeHtml(texto.substring(indexBegin, texto.length)));
 	}
-
+	
 	document.querySelector("#highlightText").innerHTML = conteudo;
 }
 
@@ -121,7 +121,7 @@ function escapeHtml( string ) {
             .replace(/"/g, '&quot;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
-}
+}	
 
 
 function pegaValoresDoForm() {
@@ -138,9 +138,9 @@ function pegaValoresDoForm() {
   	console.log('Target:  ' + inputTarget.value);
   	console.log('Pattern: ' + inputPattern.value.trim());
 
-  	return {'target': inputTarget.value.trim(),
-  			'pattern': inputPattern.value,
-  			'mostraIndex': checkboxIndex.checked,
+  	return {'target': inputTarget.value.trim(), 
+  			'pattern': inputPattern.value, 
+  			'mostraIndex': checkboxIndex.checked, 
   			'mostraGrupos' : checkboxGroups.checked};
 }
 
@@ -173,6 +173,6 @@ function montaPatternDeDataMaisLegivel() {
 	var _DE_ = "\\s+(de )?\\s*";
 	var MES  = "[A-Za-z][a-zç]{3,8}";
 	var ANO  = "[12]\\d{3}";
-	return DIA + _DE_ +  MES + _DE_ + ANO;
+	return DIA + _DE_ +  MES + _DE_ + ANO;  
 
 }
