@@ -39,7 +39,6 @@ const validateForm = () => {
 */
 window.addEventListener('load', () => {
 
-  console.log('Hello');
   validateForm();
 
 });
