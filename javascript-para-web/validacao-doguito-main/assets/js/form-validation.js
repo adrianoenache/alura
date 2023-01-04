@@ -38,7 +38,8 @@ export const validate = (input) => {
 
 */
 const validateRules = {
-  dataDeNascimento:input => validateBornDate(input)
+  dataDeNascimento:input => validateBornDate(input),
+  cpf:input => validateCPF(input)
 }
 
 /*
@@ -64,6 +65,10 @@ const errorMessages = {
   dataDeNascimento: {
     valueMissing: 'O campo data de nascimento não pode estar vazio.',
     customError: 'Você deve ser maior de idade para se cadastrar!'
+  },
+  cpf: {
+    valueMissing: 'O campo CPF não pode estar vazio.',
+    customError: 'O CPF digitado não é valido.'
   }
 }
 
@@ -140,5 +145,106 @@ const ofLegalAge = (date) => {
   const dateOfLegalAge = new Date(date.getUTCFullYear() + legalAge, date.getUTCMonth(), date.getUTCDate());
 
   return dateOfLegalAge <= currentDate;
+
+}
+
+const validateCPF = (input) => {
+
+  const formatCPF = input.value.replace(/\D/g, '');
+
+  let message = '';
+
+  if(!checkCPFRepeatedNumbers(formatCPF) || !checkCPFStructure(formatCPF)) {
+
+    message = 'O CPF digitado não é valido.';
+
+  }
+
+  input.setCustomValidity(message);
+
+}
+
+const checkCPFRepeatedNumbers = (cpf) => {
+
+  const repeatedNumbers = [
+    '00000000000',
+    '11111111111',
+    '22222222222',
+    '33333333333',
+    '44444444444',
+    '55555555555',
+    '66666666666',
+    '77777777777',
+    '88888888888',
+    '99999999999'
+  ]
+
+  let cpfHasRepeatedNumbers = true;
+
+  repeatedNumbers.forEach(repeatedNumber => {
+
+    if(repeatedNumber == cpf) {
+
+      cpfHasRepeatedNumbers = false;
+
+    }
+
+  });
+
+  return cpfHasRepeatedNumbers;
+
+}
+
+const checkCPFStructure = (cpf) => {
+
+  const multiplier = 10;
+
+  return digitVerifier(cpf, multiplier);
+}
+
+const digitVerifier = (cpf, multiplier) => {
+
+
+  if(multiplier >= 12) {
+
+    return true;
+
+  }
+
+  let initialMultiplier = multiplier;
+  let sum = 0;
+  const cpfNoDigits = cpf.substr(0, multiplier - 1).split('');
+  const digitToVerify = cpf.charAt(multiplier - 1);
+
+  for(let count = 0; initialMultiplier > 1; initialMultiplier--) {
+
+    sum = sum + cpfNoDigits[count] * initialMultiplier;
+
+    count++;
+
+  }
+
+  if(digitToVerify == confirmType(sum)) {
+
+
+    return digitVerifier(cpf, multiplier + 1);
+
+  }
+
+  return false;
+
+}
+
+const confirmType = (sum) => {
+
+  if((11 - (sum % 11)) == 10) {
+
+    return 0;
+
+  } else {
+
+    return 11 - (sum % 11);
+
+  }
 
 }
