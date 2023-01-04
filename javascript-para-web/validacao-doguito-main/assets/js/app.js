@@ -16,8 +16,32 @@ import { validate } from './form-validation.js';
 const validateForm = () => {
 
   const fields = $getMySelectors('input');
+  const simpleMaskMoneyConfig = {
+    prefix: 'R$ ',
+    fixed: true,
+    fractionDigits: 2,
+    decimalSeparator: ',',
+    thousandsSeparator: '.',
+    cursor: 'end'
+  }
 
   fields.forEach(field => {
+
+    // Faz a verificação do tipo de input para aplicar a máscara.
+    if(field.dataset.type === 'preco') {
+
+/*
+
+  Máscara monetária
+  Git https://github.com/codermarcos/simple-mask-money
+  Chamada no HTML <script src="https://github.com/codermarcos/simple-mask-money/releases/download/v3.0.0/simple-mask-money.js"></script>
+
+  A função SimpleMaskMoney recebe como parâmetro o input alvo e as configurações do plugin.
+
+*/
+      SimpleMaskMoney.setMask(field, simpleMaskMoneyConfig);
+
+    }
 
     field.addEventListener('blur', (event) => {
 

@@ -94,6 +94,9 @@ const errorMessages = {
   },
   estado: {
     valueMissing: 'O campo estado não pode estar vazio.'
+  },
+  preco: {
+    valueMissing: 'O campo preço não pode estar vazio.'
   }
 }
 
