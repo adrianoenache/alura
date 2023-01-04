@@ -1,5 +1,15 @@
 /*
 
+  O arquivo foi dividido em outros arquivos para facilitar
+  legibilidade e reutilização do código.
+
+*/
+import { validateBornDate } from './form-validations/validate-born-date.js';
+import { validateCPF } from './form-validations/validate-cpf.js';
+import { pullCEP } from './pull-api/pull-cep.js';
+
+/*
+
   A função validate recebe o campo a ser testado pelo
   parâmetro input, então é armazenado na variável typeOfInput
   o tipo do campo. Em seguida é testado se o campo possui
@@ -39,7 +49,8 @@ export const validate = (input) => {
 */
 const validateRules = {
   dataDeNascimento:input => validateBornDate(input),
-  cpf:input => validateCPF(input)
+  cpf:input => validateCPF(input),
+  cep:input => pullCEP(input)
 }
 
 /*
@@ -68,7 +79,21 @@ const errorMessages = {
   },
   cpf: {
     valueMissing: 'O campo CPF não pode estar vazio.',
-    customError: 'O CPF digitado não é valido.'
+    customError: 'O CPF digitado não é valido, ele deve conter 11 digitos ex.: 000.000.000-00, 00000000000.'
+  },
+  cep: {
+    valueMissing: 'O campo CEP não pode estar vazio.',
+    patternMismatch: 'O CEP digitado não é valido, ele deve conter 8 digitos ex.: 00000-000, 00000000.',
+    customError: 'O CEP digitado não foi encontrado.'
+  },
+  logradouro: {
+    valueMissing: 'O campo logradouro não pode estar vazio.'
+  },
+  cidade: {
+    valueMissing: 'O campo cidade não pode estar vazio.'
+  },
+  estado: {
+    valueMissing: 'O campo estado não pode estar vazio.'
   }
 }
 
@@ -106,145 +131,5 @@ const showErrorMessages = (typeOfField, element) => {
   });
 
   return message;
-
-}
-
-/*
-
-  A função validateBornDate faz a validação do campo passando
-  uma mensagem customizada caso o retorno da função ofLegalAge
-  seja igual a false.
-
-*/
-const validateBornDate = (input) => {
-
-  const dateFromInput = new Date(input.value);
-  let message = '';
-
-  if(!ofLegalAge(dateFromInput)) {
-
-    message = 'Você deve ser maior de idade para se cadastrar!';
-
-  }
-
-  input.setCustomValidity(message);
-
-}
-
-/*
-
-  A função ofLegalAge compara a data vinda do campo de input com a
-  data atual retornando verdadeiro ou falso. A variável legalAge
-  controla a régua de corte da idade legal.
-
-*/
-const ofLegalAge = (date) => {
-
-  const legalAge = 18;
-  const currentDate = new Date();
-  const dateOfLegalAge = new Date(date.getUTCFullYear() + legalAge, date.getUTCMonth(), date.getUTCDate());
-
-  return dateOfLegalAge <= currentDate;
-
-}
-
-const validateCPF = (input) => {
-
-  const formatCPF = input.value.replace(/\D/g, '');
-
-  let message = '';
-
-  if(!checkCPFRepeatedNumbers(formatCPF) || !checkCPFStructure(formatCPF)) {
-
-    message = 'O CPF digitado não é valido.';
-
-  }
-
-  input.setCustomValidity(message);
-
-}
-
-const checkCPFRepeatedNumbers = (cpf) => {
-
-  const repeatedNumbers = [
-    '00000000000',
-    '11111111111',
-    '22222222222',
-    '33333333333',
-    '44444444444',
-    '55555555555',
-    '66666666666',
-    '77777777777',
-    '88888888888',
-    '99999999999'
-  ]
-
-  let cpfHasRepeatedNumbers = true;
-
-  repeatedNumbers.forEach(repeatedNumber => {
-
-    if(repeatedNumber == cpf) {
-
-      cpfHasRepeatedNumbers = false;
-
-    }
-
-  });
-
-  return cpfHasRepeatedNumbers;
-
-}
-
-const checkCPFStructure = (cpf) => {
-
-  const multiplier = 10;
-
-  return digitVerifier(cpf, multiplier);
-}
-
-const digitVerifier = (cpf, multiplier) => {
-
-
-  if(multiplier >= 12) {
-
-    return true;
-
-  }
-
-  let initialMultiplier = multiplier;
-  let sum = 0;
-  const cpfNoDigits = cpf.substr(0, multiplier - 1).split('');
-  const digitToVerify = cpf.charAt(multiplier - 1);
-
-  for(let count = 0; initialMultiplier > 1; initialMultiplier--) {
-
-    sum = sum + cpfNoDigits[count] * initialMultiplier;
-
-    count++;
-
-  }
-
-  if(digitToVerify == confirmType(sum)) {
-
-
-    return digitVerifier(cpf, multiplier + 1);
-
-  }
-
-  return false;
-
-}
-
-const confirmType = (sum) => {
-
-  if((11 - (sum % 11)) == 10) {
-
-    return 0;
-
-  } else {
-
-    return 11 - (sum % 11);
-
-  }
 
 }
