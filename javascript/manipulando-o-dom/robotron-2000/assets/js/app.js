@@ -5,13 +5,15 @@
 
 */
 import { $getMySelectors } from './common-functions.js';
-import { startRobotronControls } from './robotron.js';
+import { startRobotronControls, startPanelInfo } from './robotron.js';
 
 const initCode = () => {
 
   const selectControls =  $getMySelectors('.controle');
+  const selectPanelInfo =  $getMySelectors('[data-assembly-stats-info]');
 
-  startRobotronControls(selectControls);
+  startRobotronControls(selectControls, selectPanelInfo);
+  startPanelInfo(selectPanelInfo);
 
 }
 
