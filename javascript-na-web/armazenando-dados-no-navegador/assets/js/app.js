@@ -4,11 +4,14 @@
   o arquivo "app.js", o parâmetro "type" tenha o valor "module".
 
 */
-// import { $getMySelectors } from './common-functions.js';
+import { $getMySelector } from './common-functions.js';
+import { startBackpackForm } from './backpack.js';
 
 const initCode = () => {
 
-  console.log('Hello there');
+  const formBackpack = $getMySelector('.adicionar');
+
+  startBackpackForm(formBackpack);
 
 }
 
