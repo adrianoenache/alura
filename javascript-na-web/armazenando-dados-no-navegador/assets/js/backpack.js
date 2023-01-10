@@ -4,13 +4,30 @@
   o arquivo "app.js", o parâmetro "type" tenha o valor "module".
 
 */
-import { $getMySelector, onTargetEventDoAction, createElementFromTemplateOnTarget } from './common-functions.js';
+import { $getMySelector, onTargetEventDoAction, createElementFromTemplateOnTarget, setLocalStorageData, getLocalStorageData } from './common-functions.js';
 
 const $backpacktList = $getMySelector('.lista');
+const backpackData = getLocalStorageData('myBackpack') || [];
 
-export function startBackpackForm($target) {
+function loadBackpackData(dataFromBackpack) {
 
-  console.log('### target ', $target);
+  if(dataFromBackpack) {
+
+    dataFromBackpack.forEach((data) => {
+
+      const template = `<li class="item"><strong>${data.quantity}</strong> ${data.item}</li>`;
+
+      createElementFromTemplateOnTarget($backpacktList, template);
+
+    });
+
+  }
+
+}
+
+export function startBackpack($target) {
+
+  loadBackpackData(backpackData);
 
   onTargetEventDoAction($target, 'submit', onSubmitDoAction);
 
@@ -23,8 +40,6 @@ function onSubmitDoAction(event) {
   const itemName = event.target.elements['nome'].value;
   const itemQuantity = event.target.elements['quantidade'].value;
 
-  // createBackpackItemOnList(itemName, itemQuantity);
-
   const data = {
     item: itemName,
     quantity: itemQuantity
@@ -33,6 +48,12 @@ function onSubmitDoAction(event) {
   const template = `<li class="item"><strong>${data.quantity}</strong> ${data.item}</li>`;
 
   createElementFromTemplateOnTarget($backpacktList, template);
+
+  backpackData.push(data);
+
+  setLocalStorageData('myBackpack', backpackData);
+
+  event.target.reset();
 
 }
 

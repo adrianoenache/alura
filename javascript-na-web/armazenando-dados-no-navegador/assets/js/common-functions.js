@@ -59,3 +59,15 @@ export function createElementFromTemplateOnTarget($target, template) {
   $target.innerHTML += template;
 
 }
+
+export function setLocalStorageData(key, value) {
+
+  localStorage.setItem(key, JSON.stringify(value));
+
+}
+
+export function getLocalStorageData(key) {
+
+  return JSON.parse(localStorage.getItem(key));
+
+}

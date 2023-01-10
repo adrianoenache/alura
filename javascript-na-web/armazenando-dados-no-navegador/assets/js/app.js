@@ -5,13 +5,13 @@
 
 */
 import { $getMySelector } from './common-functions.js';
-import { startBackpackForm } from './backpack.js';
+import { startBackpack} from './backpack.js';
 
 const initCode = () => {
 
   const formBackpack = $getMySelector('.adicionar');
 
-  startBackpackForm(formBackpack);
+  startBackpack(formBackpack);
 
 }
 
