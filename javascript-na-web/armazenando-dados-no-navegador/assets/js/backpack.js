@@ -4,10 +4,18 @@
   o arquivo "app.js", o parâmetro "type" tenha o valor "module".
 
 */
-import { $getMySelector, onTargetEventDoAction, createElementFromTemplateOnTarget, setLocalStorageData, getLocalStorageData } from './common-functions.js';
+import { $getMySelector, $getMySelectors, onTargetEventDoAction, createElementFromTemplateOnTarget, setLocalStorageData, getLocalStorageData } from './common-functions.js';
 
 const $backpacktList = $getMySelector('.lista');
 const backpackData = getLocalStorageData('myBackpack') || [];
+
+export function startBackpack($target) {
+
+  loadBackpackData(backpackData);
+
+  onTargetEventDoAction($target, 'submit', onSubmitDoAction);
+
+}
 
 function loadBackpackData(dataFromBackpack) {
 
@@ -25,20 +33,15 @@ function loadBackpackData(dataFromBackpack) {
 
 }
 
-export function startBackpack($target) {
-
-  loadBackpackData(backpackData);
-
-  onTargetEventDoAction($target, 'submit', onSubmitDoAction);
-
-}
-
 function onSubmitDoAction(event) {
 
   event.preventDefault();
 
   const itemName = event.target.elements['nome'].value;
   const itemQuantity = event.target.elements['quantidade'].value;
+
+  const itemExist = backpackData.find(element => element.item === itemName);
+  const itemExistPosition = backpackData.findIndex(element => element.item === itemName);
 
   const data = {
     item: itemName,
@@ -47,16 +50,28 @@ function onSubmitDoAction(event) {
 
   const template = `<li class="item"><strong>${data.quantity}</strong> ${data.item}</li>`;
 
-  createElementFromTemplateOnTarget($backpacktList, template);
+  if(itemExist) {
 
-  backpackData.push(data);
+    const elementToUpdate = $getMySelectors('.item');
+
+    backpackData[itemExistPosition].quantity = itemQuantity;
+    elementToUpdate[itemExistPosition].querySelector('strong').innerHTML = itemQuantity;
+
+  } else {
+
+    createElementFromTemplateOnTarget($backpacktList, template);
+    backpackData.push(data);
+
+  }
 
   setLocalStorageData('myBackpack', backpackData);
 
+  event.target.querySelector('#nome').focus();
   event.target.reset();
 
 }
 
+/*
 function createBackpackItemOnList(itemName, itemQuantity) {
 
   const newItem = document.createElement('li');
@@ -71,3 +86,4 @@ function createBackpackItemOnList(itemName, itemQuantity) {
   $backpacktList.appendChild(newItem);
 
 }
+*/
