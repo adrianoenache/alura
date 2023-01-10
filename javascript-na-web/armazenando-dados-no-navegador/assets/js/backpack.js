@@ -7,7 +7,7 @@
 import { $getMySelector, $getMySelectors, onTargetEventDoAction, createElementFromTemplateOnTarget, setLocalStorageData, getLocalStorageData } from './common-functions.js';
 
 const $backpacktList = $getMySelector('.lista');
-const backpackData = getLocalStorageData('myBackpack') || [];
+let backpackData = getLocalStorageData('myBackpack') || [];
 
 export function startBackpack($target) {
 
@@ -50,12 +50,25 @@ function onSubmitDoAction(event) {
 
   const template = `<li class="item"><strong>${data.quantity}</strong> ${data.item}</li>`;
 
+  const elementToUpdate = $getMySelectors('.item');
+
   if(itemExist) {
 
-    const elementToUpdate = $getMySelectors('.item');
+    if(itemQuantity == "" || itemQuantity == 0) {
 
-    backpackData[itemExistPosition].quantity = itemQuantity;
-    elementToUpdate[itemExistPosition].querySelector('strong').innerHTML = itemQuantity;
+      removeItensFromList(elementToUpdate, itemExistPosition);
+
+    } else {
+
+      backpackData[itemExistPosition].quantity = itemQuantity;
+
+      if(elementToUpdate) {
+
+        elementToUpdate[itemExistPosition].querySelector('strong').innerHTML = itemQuantity;
+
+      }
+
+    }
 
   } else {
 
@@ -68,6 +81,13 @@ function onSubmitDoAction(event) {
 
   event.target.querySelector('#nome').focus();
   event.target.reset();
+
+}
+
+function removeItensFromList(element, index) {
+
+  backpackData.splice(index, 1);
+  element[index].remove();
 
 }
 

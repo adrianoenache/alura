@@ -26,6 +26,8 @@ export function $getMySelector($target) {
 
     console.warn('A função $getMySelector não encontrou o elemento.');
 
+    return false;
+
   }
 
 }
@@ -39,6 +41,8 @@ export function $getMySelectors($targets) {
   } else {
 
     console.warn('A função $getMySelectors não encontrou os elementos.');
+
+    return false;
 
   }
 
