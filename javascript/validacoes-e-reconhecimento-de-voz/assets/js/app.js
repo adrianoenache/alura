@@ -5,10 +5,11 @@
 
 */
 // import { $getMySelector } from './common-functions.js';
+import { startGameGessANumber } from './game-guess-a-number.js'
 
 const initCode = () => {
 
-  console.log('Setup');
+  startGameGessANumber();
 
 }
 
