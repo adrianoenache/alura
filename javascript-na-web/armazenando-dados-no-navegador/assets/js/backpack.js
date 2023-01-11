@@ -11,9 +11,50 @@ let backpackData = getLocalStorageData('myBackpack') || [];
 
 export function startBackpack($target) {
 
+  wachForChangesOnList($backpacktList);
+
   loadBackpackData(backpackData);
 
   onTargetEventDoAction($target, 'submit', onSubmitDoAction);
+
+}
+
+function wachForChangesOnList(target) {
+
+  let wachList = new MutationObserver(whatChange => {
+
+    addRemoveElementActionOnclick();
+
+  });
+
+  wachList.observe(target, {
+    childList: true,
+    subtree: true
+  });
+
+}
+
+function addRemoveElementActionOnclick() {
+
+  const targetItens = $getMySelectors('.item');
+
+  if (targetItens) {
+
+    targetItens.forEach((element, index) => {
+
+      element.addEventListener('click', () => {
+
+        backpackData.splice(index, 1);
+        element.remove();
+
+        setLocalStorageData('myBackpack', backpackData);
+        backpackData = getLocalStorageData('myBackpack') || [];
+
+      });
+
+    });
+
+  }
 
 }
 
