@@ -47,6 +47,8 @@ function startWebSpeech() {
 
   newSpeechRecognition.addEventListener('result', onSpeack);
 
+  newSpeechRecognition.addEventListener('end', () => newSpeechRecognition.start());
+
 }
 
 function onSpeack(event) {
@@ -62,15 +64,15 @@ function verifyMyGuess(myGuess) {
 
   let number = +myGuess;
 
-  if(myGuess == 'Zero.') {
-
-    elementResult.innerHTML += '<div>O valor não pode ser zero.</div>';
-
-  }
-
   if(myGuess == 'Um.') {
 
     number = 1;
+
+  }
+
+  if(myGuess == 'Zero.') {
+
+    elementResult.innerHTML += '<div>O valor não pode ser zero.</div>';
 
   }
 
@@ -100,11 +102,12 @@ function verifyMyGuess(myGuess) {
 
   if(number == guessThisNumber) {
 
-    elementResult.innerHTML += `<div>Você acertou o número sorteado ${guessThisNumber}.</div>`;
+    elementResult.innerHTML += `<div>Você acertou o número sorteado ${guessThisNumber}!!! Tente acertar outro.</div>`;
+
+    guessThisNumber = raffleANumber(limitNumber);
+    console.log('new guessThisNumber', guessThisNumber);
 
   }
-
-  console.log('### myGuess ', myGuess);
 
 }
 
