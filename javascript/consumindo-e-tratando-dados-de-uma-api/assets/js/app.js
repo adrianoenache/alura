@@ -4,11 +4,13 @@
   o arquivo "app.js", o parâmetro "type" tenha o valor "module".
 
 */
-// import { $getMySelector } from './common-functions.js';
+import { getDataFromViaCep } from './common-functions.js';
 
 const initCode = () => {
 
-  console.log('Setup');
+  const apiReturn = getDataFromViaCep('01530-010');
+
+  console.log('getDataFromViaCep = ', apiReturn);
 
 }
 

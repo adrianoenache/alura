@@ -75,3 +75,63 @@ export function getLocalStorageData(key) {
   return JSON.parse(localStorage.getItem(key));
 
 }
+
+/*
+
+  A função getDataFromViaCep
+
+*/
+export async function getDataFromViaCep(cepRequested) {
+
+  const formatCEP = cepRequested.replace(/\D/g, '');
+
+  if(formatCEP.length !== 8) {
+
+    console.warn(`O formato do CEP ${formatCEP} é inválido, ele deve conter 8 digitos.`);
+
+    return;
+
+  }
+
+  const urlAPI = `https://viacep.com.br/ws/${formatCEP}/json/`;
+  const optionsAPI = {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'content-type': 'application/json;charset=utf-8'
+    }
+  }
+
+  fetch(urlAPI, optionsAPI)
+  .then(
+
+    response => response.json()
+
+  )
+  .then(
+
+    data => {
+
+      if(data.erro) {
+
+        console.error(`O CEP ${cepRequested} não foi encontrado`, data);
+
+      } else {
+
+        console.log('data', data);
+
+      }
+
+    }
+
+  ).catch(
+
+    erro => console.warn(erro)
+
+  ).finally(
+
+    msg => console.log('Pocesso de consulta da API foi finalizado.')
+
+  );
+
+}
