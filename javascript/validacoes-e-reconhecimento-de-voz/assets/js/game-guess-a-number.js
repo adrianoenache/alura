@@ -7,6 +7,7 @@
 import { $getMySelector } from './common-functions.js';
 
 let guessThisNumber = '';
+let newSpeechRecognition = '';
 const limitNumber = 1000;
 const baseNumber = 1;
 const elementResult = $getMySelector('#chute');
@@ -40,14 +41,21 @@ function raffleANumber(setLimitNumber) {
 function startWebSpeech() {
 
   window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
-  const newSpeechRecognition = new SpeechRecognition();
+  newSpeechRecognition = new SpeechRecognition();
 
   newSpeechRecognition.lang = 'pt-BR';
   newSpeechRecognition.start();
 
   newSpeechRecognition.addEventListener('result', onSpeack);
+  newSpeechRecognition.addEventListener('end', () => {
 
-  newSpeechRecognition.addEventListener('end', () => newSpeechRecognition.start());
+    if(newSpeechRecognition) {
+
+      newSpeechRecognition.start();
+
+    }
+
+  });
 
 }
 
@@ -63,6 +71,16 @@ function onSpeack(event) {
 function verifyMyGuess(myGuess) {
 
   let number = +myGuess;
+
+  if(myGuess == 'Game Over.') {
+
+    gameOver();
+
+    console.log('Game Over.');
+
+    return;
+
+  }
 
   if(myGuess == 'Um.') {
 
@@ -102,7 +120,11 @@ function verifyMyGuess(myGuess) {
 
   if(number == guessThisNumber) {
 
-    elementResult.innerHTML += `<div>Você acertou o número sorteado ${guessThisNumber}!!! Tente acertar outro.</div>`;
+    elementResult.innerHTML += `<div>
+    <p>Você acertou o número sorteado ${guessThisNumber}!!!</p>
+    <p>Tente acertar outro.</p>
+    <p>Ou diga <strong>Game Over</strong> para finalizar.</p>
+    </div>`;
 
     guessThisNumber = raffleANumber(limitNumber);
     console.log('new guessThisNumber', guessThisNumber);
@@ -120,5 +142,19 @@ function checkIfIsNumber(value) {
 function checkIfNumberIsInRange(value) {
 
   return value > limitNumber || value < baseNumber;
+
+}
+
+function gameOver() {
+
+  newSpeechRecognition = '';
+
+  elementResult.innerHTML += `<div><button id="restart-game" type="button">Recomeçar jogo</button></div>`;
+
+  elementResult.querySelector('#restart-game').addEventListener('click', () => {
+
+    window.location.reload();
+
+  });
 
 }
