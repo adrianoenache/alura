@@ -102,36 +102,26 @@ export async function getDataFromViaCep(cepRequested) {
     }
   }
 
-  fetch(urlAPI, optionsAPI)
-  .then(
+  let apiResult = '';
+  let transformInJson = '';
 
-    response => response.json()
+  try {
 
-  )
-  .then(
+    apiResult = await fetch(urlAPI, optionsAPI);
+    transformInJson = await apiResult.json();
 
-    data => {
+    if(transformInJson.erro) {
 
-      if(data.erro) {
-
-        console.error(`O CEP ${cepRequested} não foi encontrado`, data);
-
-      } else {
-
-        console.log('data', data);
-
-      }
+      throw Error(`O CEP ${cepRequested} não existe.`);
 
     }
 
-  ).catch(
+    return transformInJson;
 
-    erro => console.warn(erro)
+  } catch(erro) {
 
-  ).finally(
+    console.error('Erro na consulta = ', erro);
 
-    msg => console.log('Pocesso de consulta da API foi finalizado.')
-
-  );
+  }
 
 }

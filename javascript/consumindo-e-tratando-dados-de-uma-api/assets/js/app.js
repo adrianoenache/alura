@@ -4,13 +4,11 @@
   o arquivo "app.js", o parâmetro "type" tenha o valor "module".
 
 */
-import { getDataFromViaCep } from './common-functions.js';
+import { updateAddressInAluraForm } from './update-form-alura.js';
 
 const initCode = () => {
 
-  const apiReturn = getDataFromViaCep('01530-010');
-
-  console.log('getDataFromViaCep = ', apiReturn);
+  updateAddressInAluraForm();
 
 }
 
