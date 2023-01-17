@@ -5,10 +5,11 @@
 
 */
 // import { $getMySelector } from './common-functions.js';
+import { startAluraBooks } from './alura-books.js';
 
 const initCode = () => {
 
-  console.log('Setup');
+  startAluraBooks();
 
 }
 
