@@ -9,6 +9,8 @@ import { $getMySelector, createElementFromTemplateOnTarget } from './common-func
 let books = [];
 const apiBooks = 'https://guilhermeonrails.github.io/casadocodigo/livros.json';
 const targetToInsertTheBooks = $getMySelector('#livros');
+const discountLimitRule = 20;
+const discountValue = 0.3;
 
 console.log('targetToInsertTheBooks', targetToInsertTheBooks);
 
@@ -24,10 +26,14 @@ async function pullDataOfBooksFromApi() {
 
   books = await response.json();
 
-  console.log('### books = ', books);
   console.table(books);
 
-  insertBooksInPlace(books);
+  const booksWithDiscountApplied = applyDiscountInTheBooks(books);
+
+  console.log({booksWithDiscountApplied});
+  console.table(booksWithDiscountApplied);
+
+  insertBooksInPlace(booksWithDiscountApplied);
 
 }
 
@@ -58,5 +64,20 @@ function insertBooksInPlace(dataOfTheBooks) {
     createElementFromTemplateOnTarget(targetToInsertTheBooks, template);
 
   });
+
+}
+
+function applyDiscountInTheBooks(books) {
+
+  const booksWithDiscount = books.map(book => {
+
+    return {
+      ...book,
+      preco: book.preco >= discountLimitRule ? (book.preco - (book.preco * discountValue)).toFixed(2) : book.preco
+    }
+
+  });
+
+  return booksWithDiscount;
 
 }
