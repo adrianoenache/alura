@@ -4,15 +4,15 @@
   o arquivo "app.js", o parâmetro "type" tenha o valor "module".
 
 */
-import { $getMySelector, createElementFromTemplateOnTarget } from './common-functions.js';
+import { $getMySelector, $getMySelectors, createElementFromTemplateOnTarget, onTargetEventDoAction } from './common-functions.js';
 
 let books = [];
 const apiBooks = 'https://guilhermeonrails.github.io/casadocodigo/livros.json';
 const targetToInsertTheBooks = $getMySelector('#livros');
 const discountLimitRule = 20;
 const discountValue = 0.3;
-
-console.log('targetToInsertTheBooks', targetToInsertTheBooks);
+const filterButtons = $getMySelectors('.filter');
+let booksFiltered = [];
 
 export function startAluraBooks() {
 
@@ -26,24 +26,29 @@ async function pullDataOfBooksFromApi() {
 
   books = await response.json();
 
-  console.table(books);
-
   const booksWithDiscountApplied = applyDiscountInTheBooks(books);
-
-  console.log({booksWithDiscountApplied});
-  console.table(booksWithDiscountApplied);
 
   insertBooksInPlace(booksWithDiscountApplied);
 
+  filterBooksby(books);
+
 }
 
-function insertBooksInPlace(dataOfTheBooks) {
+function insertBooksInPlace(dataOfTheBooks, doWhat = 'add') {
+
+  if(doWhat === 'replace') {
+
+    targetToInsertTheBooks.innerHTML = '';
+
+  }
 
   dataOfTheBooks.forEach(book => {
 
+    let bookIsntAvailable = book.quantidade == 0 ? 'indisponivel' : '';
+
     let template = `
     <div class="livro">
-      <img class="livro__imagens" src="${book.imagem}" alt="${book.alt}" />
+      <img class="livro__imagens ${bookIsntAvailable}" src="${book.imagem}" alt="${book.alt}" />
       <h2 class="livro__titulo">
         ${book.titulo}
       </h2>
@@ -79,5 +84,40 @@ function applyDiscountInTheBooks(books) {
   });
 
   return booksWithDiscount;
+
+}
+
+function filterBooksby(books) {
+
+  if(!books) return;
+
+  filterButtons.forEach(filterbutton => {
+
+    onTargetEventDoAction(filterbutton, 'click', () => {
+
+      if(filterbutton.value === 'show-all') {
+
+        booksFiltered = books;
+
+        insertBooksInPlace(booksFiltered, 'replace');
+
+      } else {
+
+        if(filterbutton.value === 'available') {
+
+          booksFiltered = booksFiltered.filter(book => book.quantidade !== 0);
+
+        } else {
+
+          booksFiltered = books.filter(book => book.categoria == filterbutton.value);
+        }
+
+        insertBooksInPlace(booksFiltered, 'replace');
+
+      }
+
+    })
+
+  });
 
 }
