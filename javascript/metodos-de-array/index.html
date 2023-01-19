@@ -18,35 +18,53 @@
 <body>
   <section class="banner"></section>
   <nav class="wrap">
-    <ul class="nav">
+    <ul class="nav" id="filter-controllers">
       <li>
-        <button class="btn btn-front filter" href="#" id="btnFiltrarLivrosFront" value="front-end">
+        <button class="btn btn-front filter" value="front-end">
           LIVROS DE FRONT-END
         </button>
       </li>
       <li>
-        <button class="btn btn-back filter" href="#" id="btnFiltrarLivrosBack" value="back-end">
+        <button class="btn btn-back filter" value="back-end">
           LIVROS DE BACK-END
         </button>
       </li>
       <li>
-        <button class="btn btn-dados filter" href="#" id="btnFiltrarLivrosDados" value="dados">
+        <button class="btn btn-dados filter" value="dados">
           LIVROS DE DADOS
         </button>
       </li>
       <li>
-        <button class="btn btn-dados filter" href="#" id="btnFiltrarLivrosDados" value="show-all">
+        <button class="btn btn-dados filter" value="show-all">
           TODOS OD LIVROS
         </button>
       </li>
       <li>
-        <button class="btn btn-disponiveis filter" href="#" id="btnLivrosDisponiveis" value="available">
+        <button class="btn btn-disponiveis filter" value="available">
           LIVROS DISPONÍVEIS
         </button>
       </li>
       <li>
-        <button class="btn btn-ordenacao" href="#" id="btnOrdenarPorPreco">
+        <button class="btn btn-ordenacao sort-by" value="preco">
+          <span class="icons-ascending-descending">
+            <span class="icon-ascending">&#8613;</span>
+            <span class="icon-descending">&#10515;</span>
+          </span>
           ORDENAR POR PREÇO
+        </button>
+      </li>
+      <li>
+        <button class="btn btn-ordenacao sort-by" value="titulo">
+          <span class="icons-ascending-descending">
+            <span class="icon-ascending">&#8613;</span>
+            <span class="icon-descending">&#10515;</span>
+          </span>
+          ORDENAR POR NOME
+        </button>
+      </li>
+      <li>
+        <button class="btn btn-ordenacao" id="remove-sort">
+          REMOVER ORDENAÇÃO
         </button>
       </li>
     </ul>

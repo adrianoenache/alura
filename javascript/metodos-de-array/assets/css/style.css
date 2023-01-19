@@ -1,13 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,700;1,400&display=swap');
 
 :root {
-  --bg-color: #ffffff;
+  --bg-color: #fff;
   --button-color: #326589;
   --text-title-color: #fc6621;
-  --text-description-color: #fc6621;
+  --text-description-color: var(--text-title-color);
+  --button-effects: var(--text-title-color);
   --text-price-color: #002f52;
   --text-author-color: #858585;
   --text-tag-color: #9c9c9c;
+  --text-hover: #cecdcd;
+  --tag-color-rgb: 197, 197, 197;
+  --tag-color-opacity: .25;
 }
 
 body {
@@ -42,24 +46,27 @@ body {
 }
 
 .btn {
+  --animation-config: .3s ease-in-out;
   background-color: var(--button-color);
-  border: none;
+  border: 0;
+  box-shadow: 0 0 0 var(--bg-color);
   cursor: pointer;
-  height: 44px;
+  line-height: 1.5em;
   text-decoration: none;
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  color: var(--bg-color);
+  padding: .5em 1em;
+  border-radius: .5em;
+  font-size: 0.7rem;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
+  transition: color var(--animation-config), border-radius var(--animation-config), box-shadow var(--animation-config);
 }
 
 .btn:hover {
-  color: #cecdcd;
-  border-radius: 10px;
-  border-bottom: 2px solid var(--text-description-color);
+  color: var(--text-hover);
+  border-radius: .8em;
+  box-shadow: 2px 2px 2px var(--button-effects);
 }
 
 .livros {
@@ -117,7 +124,7 @@ body {
   font-weight: 500;
   color: var(--text-tag-color);
   padding: 5px 4px;
-  background: rgba(197, 197, 197, 0.25);
+  background: rgba(var(--tag-color-rgb), var(--tag-color-opacity));
   border-radius: 4px;
   margin-right: 1rem;
 }
@@ -135,26 +142,48 @@ body {
 }
 
 .livros__disponiveis p {
-  color: #fff;
+  color: var(--bg-color);
   font-weight: 500;
   line-height: 24px;
   font-size: 2.5em;
 }
 
 .rodape {
+  --gradient: linear-gradient(var(--custom-gradient-direction, 90deg), var(--text-price-color) 36.3%, var(--button-color) 99.56%);
   width: 100%;
   height: 104px;
-  background: linear-gradient(96.48deg, #002f52 36.3%, #326589 99.56%);
+  background-image: var(--gradient);
   margin-top: 1rem;
   text-align: center;
-
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.rodape:hover {
+  --custom-gradient-direction: 270deg;
+}
+
 .rodape p {
-  color: #fff;
+  color: var(--bg-color);
   font-weight: 500;
   line-height: 24px;
+}
+
+.icons-ascending-descending {
+  margin-right: .5rem;
+}
+
+.icon-descending,
+.icon-ascending {
+  color: inherit;
+  font-size: 1rem;
+  transition: color .3s ease-in-out;
+}
+
+.sort-by-preco.put-in-ascending-order [value="preco"] .icon-ascending,
+.sort-by-preco.put-in-descending-order [value="preco"] .icon-descending,
+.sort-by-titulo.put-in-ascending-order [value="titulo"] .icon-ascending,
+.sort-by-titulo.put-in-descending-order [value="titulo"] .icon-descending {
+  color: var(--button-effects);
 }
