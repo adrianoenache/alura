@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,700;1,400&display=swap');
+
+:root {
+  --bg-color: #fff;
+  --button-color: #326589;
+  --text-title-color: #fc6621;
+  --text-description-color: var(--text-title-color);
+  --button-effects: var(--text-title-color);
+  --text-price-color: #002f52;
+  --text-author-color: #858585;
+  --text-tag-color: #9c9c9c;
+  --text-hover: #cecdcd;
+  --tag-color-rgb: 197, 197, 197;
+  --tag-color-opacity: .25;
+}
+
+body {
+  font-family: 'Poppins';
+}
+
+.wrap {
+  width: 1280px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  width: 100%;
+  background-color: var(--bg-color);
+  margin: 15px 15px;
+}
+
+.banner {
+  background-image: url('../imagens/Banner-1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 278px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  margin: 4rem 0;
+}
+
+.btn {
+  --animation-config: .3s ease-in-out;
+  background-color: var(--button-color);
+  border: 0;
+  box-shadow: 0 0 0 var(--bg-color);
+  cursor: pointer;
+  line-height: 1.5em;
+  text-decoration: none;
+  color: var(--bg-color);
+  padding: .5em 1em;
+  border-radius: .5em;
+  font-size: 0.7rem;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  transition: color var(--animation-config), border-radius var(--animation-config), box-shadow var(--animation-config);
+}
+
+.btn:hover {
+  color: var(--text-hover);
+  border-radius: .8em;
+  box-shadow: 2px 2px 2px var(--button-effects);
+}
+
+.livros {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.livro {
+  width: 302px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 644px;
+  margin-bottom: 1rem;
+}
+
+.indisponivel {
+  opacity: 0.3;
+}
+
+.livro__titulo {
+  color: var(--text-title-color);
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  line-height: 24px;
+}
+
+.livro__descricao {
+  text-align: center;
+  font-size: 18px;
+  color: var(--text-author-color);
+  margin: 1rem 0;
+}
+
+.livro__preco {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-price-color);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+}
+
+.tag {
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-tag-color);
+  padding: 5px 4px;
+  background: rgba(var(--tag-color-rgb), var(--tag-color-opacity));
+  border-radius: 4px;
+  margin-right: 1rem;
+}
+
+.livros__disponiveis {
+  width: 100%;
+  height: 80px;
+  background-color: var(--text-description-color);
+  margin-top: 1rem;
+  text-align: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.livros__disponiveis p {
+  color: var(--bg-color);
+  font-weight: 500;
+  line-height: 24px;
+  font-size: 2.5em;
+}
+
+.rodape {
+  --gradient: linear-gradient(var(--custom-gradient-direction, 90deg), var(--text-price-color) 36.3%, var(--button-color) 99.56%);
+  width: 100%;
+  height: 104px;
+  background-image: var(--gradient);
+  margin-top: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rodape:hover {
+  --custom-gradient-direction: 270deg;
+}
+
+.rodape p {
+  color: var(--bg-color);
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.icons-ascending-descending {
+  margin-right: .5rem;
+}
+
+.icon-descending,
+.icon-ascending {
+  color: inherit;
+  font-size: 1rem;
+  transition: color .3s ease-in-out;
+}
+
+.sort-by-preco.put-in-ascending-order [value="preco"] .icon-ascending,
+.sort-by-preco.put-in-descending-order [value="preco"] .icon-descending,
+.sort-by-titulo.put-in-ascending-order [value="titulo"] .icon-ascending,
+.sort-by-titulo.put-in-descending-order [value="titulo"] .icon-descending {
+  color: var(--button-effects);
+}

@@ -10,3 +10,4 @@ Repositório destinado ao código de estudo na plataforma Alura.
 * [JavaScript na web: Armazenando dados no navegador](https://cursos.alura.com.br/certificate/adriano-enache/javascript-web-armazenando-dados-navegador)
 * [JavaScript: Validações e reconhecimento de voz](https://cursos.alura.com.br/certificate/adriano-enache/javascript-validacoes-reconhecimento-voz)
 * [JavaScript: Consumindo e tratando dados de uma API](https://cursos.alura.com.br/certificate/adriano-enache/javascript-consumindo-tratando-dados-api)
+* [JavaScript: Métodos de array](https://cursos.alura.com.br/user/adriano-enache/course/javascript-metodos-array/certificate)
