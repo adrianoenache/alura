@@ -16,6 +16,7 @@ const filterControllers = $getMySelector('#filter-controllers');
 const filterButtons = $getMySelectors('.filter');
 const sortBy = $getMySelectors('.sort-by');
 const removeSort = $getMySelector('#remove-sort');
+const booksPromotion = $getMySelector('#valor_total_livros_disponiveis');
 
 const discountLimitRule = 20;
 const discountValue = 0.3;
@@ -126,6 +127,8 @@ function filterBooksby(books) {
 
         statusOfFilterSortByAvailable = '';
 
+        calculatePriceOfPackageOfBooks();
+
         resetBooksList();
 
       } else {
@@ -136,6 +139,8 @@ function filterBooksby(books) {
 
           booksFiltered = filterByAvailable(booksFiltered);
 
+          calculatePriceOfPackageOfBooks(booksFiltered);
+
         } else {
 
           booksFiltered = filterByCategory(books);
@@ -143,6 +148,8 @@ function filterBooksby(books) {
           booksFiltered = filterByAvailable(booksFiltered);
 
           booksFiltered = sortBooks(booksFiltered);
+
+          calculatePriceOfPackageOfBooks(booksFiltered);
 
         }
 
@@ -185,13 +192,9 @@ function checkForAscendingOrDescending(ascending = false) {
       filterControllers.classList.remove("put-in-descending-order");
       filterControllers.classList.add("put-in-ascending-order");
 
-      //console.log("add remove class");
-
       return 'ascending';
 
     } else if(filterControllers.classList.contains("put-in-ascending-order")) {
-
-      //console.log("just confirm");
 
       return 'ascending';
 
@@ -338,8 +341,6 @@ function btnsSortBy(buttons) {
 
           insertBooksInPlace(booksFiltered, 'replace');
 
-          //console.log(`First contact is ${statusOfFilterSortDirection}`);
-
         }
 
         return;
@@ -357,8 +358,6 @@ function btnsSortBy(buttons) {
 
         insertBooksInPlace(booksFiltered, 'replace');
 
-        //console.log(`I am ${statusOfFilterSortDirection}`);
-
       } else {
 
         statusOfFilterSortDirection = checkForAscendingOrDescending();
@@ -366,8 +365,6 @@ function btnsSortBy(buttons) {
         booksFiltered = sortBooks(booksFiltered);
 
         insertBooksInPlace(booksFiltered, 'replace');
-
-        //console.log(`I am ${statusOfFilterSortDirection}`);
 
       }
 
@@ -394,5 +391,27 @@ function btnRemoveFilters() {
     resetBooksList();
 
   });
+
+}
+
+function calculatePriceOfPackageOfBooks(books) {
+
+  if(statusOfFilterSortByAvailable) {
+
+    let priceOfPackage = books.reduce((price, book) => price + book.preco, 0).toFixed(2);
+
+    booksPromotion.innerHTML = `
+      <div class="livros__disponiveis">
+        <p>
+          Todos os livros disponíveis por R$ <span id="valor">${priceOfPackage}</span>
+        </p>
+      </div>
+    `;
+
+  } else {
+
+    booksPromotion.innerHTML = '';
+
+  }
 
 }
