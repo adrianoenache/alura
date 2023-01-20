@@ -20,7 +20,10 @@ const removeSort = $getMySelector('#remove-sort');
 const discountLimitRule = 20;
 const discountValue = 0.3;
 
-let sortDirecton = '';
+let statusOfFilterSortDirection = '';
+let statusOfFilterSortByType = '';
+let statusOfFilterSortByCategory = '';
+let statusOfFilterSortByAvailable = '';
 
 export function startAluraBooks() {
 
@@ -28,7 +31,7 @@ export function startAluraBooks() {
 
   btnsSortBy(sortBy);
 
-  btnRemoveSort();
+  btnRemoveFilters();
 
 }
 
@@ -45,6 +48,21 @@ async function pullDataOfBooksFromApi() {
   insertBooksInPlace(booksWithDiscountApplied);
 
   filterBooksby(booksFiltered);
+
+}
+
+function applyDiscountInTheBooks(books) {
+
+  const booksWithDiscount = books.map(book => {
+
+    return {
+      ...book,
+      preco: book.preco >= discountLimitRule ? (book.preco - (book.preco * discountValue)).toFixed(2) : book.preco
+    }
+
+  });
+
+  return booksWithDiscount;
 
 }
 
@@ -86,21 +104,6 @@ function insertBooksInPlace(dataOfTheBooks, doWhat = 'add') {
 
 }
 
-function applyDiscountInTheBooks(books) {
-
-  const booksWithDiscount = books.map(book => {
-
-    return {
-      ...book,
-      preco: book.preco >= discountLimitRule ? (book.preco - (book.preco * discountValue)).toFixed(2) : book.preco
-    }
-
-  });
-
-  return booksWithDiscount;
-
-}
-
 function resetBooksList() {
 
   booksFiltered = books;
@@ -117,19 +120,30 @@ function filterBooksby(books) {
 
     onTargetEventDoAction(filterbutton, 'click', () => {
 
-      if(filterbutton.value === 'show-all') {
+      statusOfFilterSortByCategory = filterbutton.value;
+
+      if(statusOfFilterSortByCategory === 'show-all') {
+
+        statusOfFilterSortByAvailable = '';
 
         resetBooksList();
 
       } else {
 
-        if(filterbutton.value === 'available') {
+        if(statusOfFilterSortByCategory === 'available') {
 
-          booksFiltered = booksFiltered.filter(book => book.quantidade !== 0);
+          statusOfFilterSortByAvailable = 'available';
+
+          booksFiltered = filterByAvailable(booksFiltered);
 
         } else {
 
-          booksFiltered = books.filter(book => book.categoria == filterbutton.value);
+          booksFiltered = filterByCategory(books);
+
+          booksFiltered = filterByAvailable(booksFiltered);
+
+          booksFiltered = sortBooks(booksFiltered);
+
         }
 
         insertBooksInPlace(booksFiltered, 'replace');
@@ -142,73 +156,23 @@ function filterBooksby(books) {
 
 }
 
-function sortBooks(sortBooks, by, direction) {
+function filterByAvailable(books) {
 
-  if(direction === 'ascending') {
+  if(statusOfFilterSortByAvailable === 'available') {
 
-    if(by === 'preco') {
+    return books.filter(book => book.quantidade > 0);
 
-      return sortBooks.sort((bookA, bookB) => bookA[by] - bookB[by]);
+  } else {
 
-    }
-
-    if(by === 'titulo') {
-
-      return sortBooks.sort((bookA, bookB) => {
-
-        if (bookA[by] < bookB[by]) {
-
-          return -1;
-
-        }
-
-
-        if (bookA[by] > bookB[by]) {
-
-          return 1;
-
-        }
-
-        return 0;
-
-      });
-
-    }
+    return books;
 
   }
 
-  if(direction === 'descending') {
+}
 
-    if(by === 'preco') {
+function filterByCategory(books) {
 
-      return sortBooks.sort((bookA, bookB) => bookA[by] - bookB[by]).reverse();
-
-    }
-
-    if(by === 'titulo') {
-
-      return sortBooks.sort((bookA, bookB) => {
-
-        if (bookA[by] < bookB[by]) {
-
-          return -1;
-
-        }
-
-
-        if (bookA[by] > bookB[by]) {
-
-          return 1;
-
-        }
-
-        return 0;
-
-      }).reverse();
-
-    }
-
-  }
+  return  books.filter(book => book.categoria == statusOfFilterSortByCategory);
 
 }
 
@@ -253,6 +217,88 @@ function checkForAscendingOrDescending(ascending = false) {
 
 }
 
+function sortBooks(sortBooks) {
+
+
+  if(statusOfFilterSortByType && statusOfFilterSortDirection) {
+
+    let by = statusOfFilterSortByType;
+    let direction = statusOfFilterSortDirection
+
+    if(direction === 'ascending') {
+
+      if(by === 'preco') {
+
+        return sortBooks.sort((bookA, bookB) => bookA[by] - bookB[by]);
+
+      }
+
+      if(by === 'titulo') {
+
+        return sortBooks.sort((bookA, bookB) => {
+
+          if (bookA[by] < bookB[by]) {
+
+            return -1;
+
+          }
+
+
+          if (bookA[by] > bookB[by]) {
+
+            return 1;
+
+          }
+
+          return 0;
+
+        });
+
+      }
+
+    }
+
+    if(direction === 'descending') {
+
+      if(by === 'preco') {
+
+        return sortBooks.sort((bookA, bookB) => bookA[by] - bookB[by]).reverse();
+
+      }
+
+      if(by === 'titulo') {
+
+        return sortBooks.sort((bookA, bookB) => {
+
+          if (bookA[by] < bookB[by]) {
+
+            return -1;
+
+          }
+
+
+          if (bookA[by] > bookB[by]) {
+
+            return 1;
+
+          }
+
+          return 0;
+
+        }).reverse();
+
+      }
+
+    }
+
+  } else {
+
+    return sortBooks;
+
+  }
+
+}
+
 function btnsSortBy(buttons) {
 
   buttons.forEach(button => {
@@ -262,6 +308,8 @@ function btnsSortBy(buttons) {
       let IAm = button.value;
       let whoAmI = '';
       let whoAmINot = '';
+
+      statusOfFilterSortByType = IAm;
 
       whoAmI = `sort-by-${IAm}`;
 
@@ -283,14 +331,14 @@ function btnsSortBy(buttons) {
 
           filterControllers.classList.add("put-in-ascending-order");
 
-          sortDirecton = checkForAscendingOrDescending(true);
+          statusOfFilterSortDirection = checkForAscendingOrDescending(true);
 
-          booksFiltered = sortBooks(booksFiltered, IAm, sortDirecton);
+          booksFiltered = sortBooks(booksFiltered);
 
 
           insertBooksInPlace(booksFiltered, 'replace');
 
-          //console.log(`First contact is ${sortDirecton}`);
+          //console.log(`First contact is ${statusOfFilterSortDirection}`);
 
         }
 
@@ -303,23 +351,23 @@ function btnsSortBy(buttons) {
         filterControllers.classList.remove(whoAmINot);
         filterControllers.classList.add(whoAmI);
 
-        sortDirecton = checkForAscendingOrDescending(true);
+        statusOfFilterSortDirection = checkForAscendingOrDescending(true);
 
-        booksFiltered = sortBooks(booksFiltered, IAm, sortDirecton);
+        booksFiltered = sortBooks(booksFiltered);
 
         insertBooksInPlace(booksFiltered, 'replace');
 
-        //console.log(`I am ${sortDirecton}`);
+        //console.log(`I am ${statusOfFilterSortDirection}`);
 
       } else {
 
-        sortDirecton = checkForAscendingOrDescending();
+        statusOfFilterSortDirection = checkForAscendingOrDescending();
 
-        booksFiltered = sortBooks(booksFiltered, IAm, sortDirecton);
+        booksFiltered = sortBooks(booksFiltered);
 
         insertBooksInPlace(booksFiltered, 'replace');
 
-        //console.log(`I am ${sortDirecton}`);
+        //console.log(`I am ${statusOfFilterSortDirection}`);
 
       }
 
@@ -329,7 +377,7 @@ function btnsSortBy(buttons) {
 
 }
 
-function btnRemoveSort() {
+function btnRemoveFilters() {
 
   onTargetEventDoAction(removeSort, 'click', () => {
 
@@ -338,11 +386,13 @@ function btnRemoveSort() {
     if(filterControllers.classList.contains("put-in-ascending-order")) filterControllers.classList.remove("put-in-ascending-order");
     if(filterControllers.classList.contains("put-in-descending-order")) filterControllers.classList.remove("put-in-descending-order");
 
-    sortDirecton = '';
+    statusOfFilterSortByAvailable = '';
+    statusOfFilterSortDirection = '';
+    statusOfFilterSortByType = '';
+    statusOfFilterSortByCategory = '';
 
     resetBooksList();
 
   });
 
 }
-
