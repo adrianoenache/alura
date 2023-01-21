@@ -1,0 +1,30 @@
+{
+  "name": "curso-alura-javascript-criando-requisicoes",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Adriano Enache <adrianoenache@hotmail.com>",
+  "description": "Exercício do curso da Alura - JavaScript criando requisições.",
+  "keywords": ["API", "Requisições", "Requests", "NodeJS", "JSON Server"],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:adrianoenache/alura.git"
+  },
+  "engines": {
+    "node": ">=18.13.0",
+    "npm": ">=8.19.3"
+  },
+  "config": {
+    "data": {
+      "source": "assets/data/db.json"
+    }
+  },
+  "scripts": {
+    "setup": "node --version && npm --version  && npm i && npm audit fix && npm outdated",
+    "start-json-server": "json-server --watch $npm_package_config_data_source",
+    "npm-uninstall": "rm -rf node_modules",
+    "npm-reinstall": "node --version && npm --version  && rm -rf node_modules && npm cache clean -f && npm i && npm audit fix && npm outdated"
+  },
+  "dependencies": {
+    "json-server": "^0.17.1"
+  }
+}
