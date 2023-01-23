@@ -5,10 +5,13 @@
 
 */
 // import { $getMySelector } from './common-functions.js';
+import { dataFromAPI } from './alura-play.js';
+
+window.aluraPlayData = '';
 
 const initCode = () => {
 
-  console.log('Setup');
+  dataFromAPI();
 
 }
 
