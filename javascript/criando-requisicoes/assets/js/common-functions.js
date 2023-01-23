@@ -75,3 +75,84 @@ export function getLocalStorageData(key) {
   return JSON.parse(localStorage.getItem(key));
 
 }
+
+/*
+
+  A função getDataFromViaCep
+
+*/
+export async function getDataFromViaCep(cepRequested) {
+
+  const formatCEP = cepRequested.replace(/\D/g, '');
+
+  if(formatCEP.length !== 8) {
+
+    console.warn(`O formato do CEP ${formatCEP} é inválido, ele deve conter 8 digitos.`);
+
+    return;
+
+  }
+
+  const urlAPI = `https://viacep.com.br/ws/${formatCEP}/json/`;
+  const optionsAPI = {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'content-type': 'application/json;charset=utf-8'
+    }
+  }
+
+  let apiResult = '';
+  let transformInJson = '';
+
+  try {
+
+    apiResult = await fetch(urlAPI, optionsAPI);
+    transformInJson = await apiResult.json();
+
+    if(transformInJson.erro) {
+
+      throw Error(`O CEP ${cepRequested} não existe.`);
+
+    }
+
+    return transformInJson;
+
+  } catch(erro) {
+
+    console.error('Erro na consulta = ', erro);
+
+  }
+
+}
+
+/*
+
+  A função getDataFrom
+
+*/
+export async function getDataFrom(urlAPI, optionsAPI, nameOfAPI = 'API') {
+
+  let apiResult = '';
+  let transformInJson = '';
+
+  try {
+
+    apiResult = await fetch(urlAPI, optionsAPI);
+    transformInJson = await apiResult.json();
+
+    if(transformInJson.erro) {
+
+      throw Error(`Erro na conversção da ${nameOfAPI} para o formato JSON.`);
+
+    }
+
+    return transformInJson;
+
+  } catch(erro) {
+
+    console.error('Erro na consulta = ', erro);
+
+  }
+
+}
