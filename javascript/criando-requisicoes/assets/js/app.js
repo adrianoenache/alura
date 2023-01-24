@@ -4,14 +4,18 @@
   o arquivo "app.js", o parâmetro "type" tenha o valor "module".
 
 */
-// import { $getMySelector } from './common-functions.js';
-import { dataFromAPI } from './alura-play.js';
+import { $getMySelector } from './common-functions.js';
+import { getDataFromAPI, getDataFromForm } from './alura-play.js';
 
 window.aluraPlayData = '';
 
 const initCode = () => {
 
-  dataFromAPI();
+  const $dataLista = $getMySelector('[data-lista]');
+  const $dataFromForm = $getMySelector('[data-form]');
+
+  if($dataLista) getDataFromAPI($dataLista);
+  if($dataFromForm) getDataFromForm($dataFromForm);
 
 }
 

@@ -24,7 +24,7 @@ export function $getMySelector($target) {
 
   } else {
 
-    console.warn('A função $getMySelector não encontrou o elemento.');
+    console.warn(`A função $getMySelector não encontrou o elemento "${$target}".`);
 
     return false;
 
@@ -40,7 +40,7 @@ export function $getMySelectors($targets) {
 
   } else {
 
-    console.warn('A função $getMySelectors não encontrou os elementos.');
+    console.warn(`A função $getMySelectors não encontrou os elementos "${$targets}".`);
 
     return false;
 
@@ -131,7 +131,7 @@ export async function getDataFromViaCep(cepRequested) {
   A função getDataFrom
 
 */
-export async function getDataFrom(urlAPI, optionsAPI, nameOfAPI = 'API') {
+export async function connectWithTheAPI(urlAPI, optionsAPI, nameOfAPI = 'API') {
 
   let apiResult = '';
   let transformInJson = '';

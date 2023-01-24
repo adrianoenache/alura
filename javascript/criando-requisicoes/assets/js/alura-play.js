@@ -4,7 +4,7 @@ Para os imports funcionem, é necessário que no HTML onde é importado
 o arquivo "app.js", o parâmetro "type" tenha o valor "module".
 
 */
-import { $getMySelector, createElementFromTemplateOnTarget, getDataFrom } from './common-functions.js';
+import { $getMySelector, createElementFromTemplateOnTarget, onTargetEventDoAction, connectWithTheAPI } from './common-functions.js';
 
 const nameOfAPI = 'AluraPlay';
 const urlOfAPI = 'http://localhost:3000/videos';
@@ -16,31 +16,35 @@ const optionsAPI = {
   }
 };
 
-const listOfVideos = $getMySelector('[data-lista]');
+let listOfVideos = '';
 
-export function dataFromAPI(replace) {
+export function getDataFromAPI($target) {
 
-  const apiPromise = getDataFrom(urlOfAPI, optionsAPI, nameOfAPI);
+  listOfVideos = $target;
+
+  const apiPromise = connectWithTheAPI(urlOfAPI, optionsAPI, nameOfAPI);
 
   apiPromise.then(data => {
 
-    if(data) {
-
-      aluraPlayData = data;
-
-      loadVideocards(aluraPlayData, replace);
-
-    } else {
+    if(!data) {
 
       console.warn(`Erro na consulta da API ${nameOfAPI}`);
 
+      return;
+
     }
+
+    aluraPlayData = data;
+
+    loadVideocards(aluraPlayData);
 
   });
 
 }
 
 function templateCard(data) {
+
+  if(!data) return;
 
   let template = `
     <li class="videos__item">
@@ -69,24 +73,90 @@ function templateCard(data) {
 
 }
 
-export function loadVideocards(dataToLoad, replace = false) {
+function loadVideocards(dataToLoad) {
 
-  if(replace === 'replace') {
+  if(!dataToLoad) return;
 
-    listOfVideos.innerHTML = '';
+  listOfVideos.innerHTML = '';
 
-  }
+  dataToLoad.forEach(data => {
 
-  if(dataToLoad) {
+    let template = templateCard(data);
 
-    dataToLoad.forEach(data => {
+    createElementFromTemplateOnTarget(listOfVideos, template);
 
-      let template = templateCard(data);
+  });
 
-      createElementFromTemplateOnTarget(listOfVideos,template);
+}
 
-    });
+export function getDataFromForm($targetForm) {
 
-  }
+  const fieldUrl = $getMySelector('[data-url]');
+  const fieldTitle = $getMySelector('[data-titulo]');
+  const fieldImage = $getMySelector('[data-imagem]');
+
+  if(!fieldUrl || !fieldTitle || !fieldImage) return;
+
+
+  onTargetEventDoAction($targetForm, 'submit', event => {
+
+    event.preventDefault();
+
+    const descriptionValue = generateRandomDescription();
+
+    const postOptionsAPI = configPostOptionsAPI(fieldTitle.value, descriptionValue, fieldUrl.value, fieldImage.value);
+
+    postDataInAPI(postOptionsAPI);
+
+  });
+
+}
+
+function generateRandomDescription() {
+
+  const randomNumber = Math.floor(Math.random() * 10);
+  const message = `${randomNumber} mil visualizações`;
+
+  return message;
+
+}
+
+function postDataInAPI(postOptionsAPI){
+
+  const apiPromise = connectWithTheAPI(urlOfAPI, postOptionsAPI, nameOfAPI);
+
+  apiPromise.then(data => {
+
+    if(!data) {
+
+      console.warn(`Erro no post da API ${nameOfAPI}`);
+
+      return;
+
+    }
+
+    window.location.href = '../pages/envio-concluido.html';
+
+  });
+
+}
+
+function configPostOptionsAPI(titulo, descricao, url, imagem) {
+
+  const optionsAPI = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'content-type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify({
+      titulo: titulo,
+      descricao: descricao,
+      url: url,
+      imagem: imagem
+    })
+  };
+
+  return optionsAPI;
 
 }
