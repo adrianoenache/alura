@@ -4,7 +4,7 @@ Para os imports funcionem, é necessário que no HTML onde é importado
 o arquivo "app.js", o parâmetro "type" tenha o valor "module".
 
 */
-import { $getMySelector, createElementFromTemplateOnTarget, onTargetEventDoAction, connectWithTheAPI } from './common-functions.js';
+import { $getMySelector, createElementFromTemplateOnTarget, onTargetEventDoAction, setLocalStorageData, getLocalStorageData, connectWithTheAPI } from './common-functions.js';
 
 const nameOfAPI = 'AluraPlay';
 const urlOfAPI = 'http://localhost:3000/videos';
@@ -15,12 +15,26 @@ const optionsAPI = {
     'content-type': 'application/json;charset=utf-8'
   }
 };
+const localStorageVideos = 'videos';
+const localStorageUpdateFlag = 'update-videos';
+
+let updateStatus = getLocalStorageData(localStorageUpdateFlag);
 
 let listOfVideos = '';
 
 export function getDataFromAPI($target) {
 
   listOfVideos = $target;
+
+  if(updateStatus == 'false') {
+
+    aluraPlayData = getLocalStorageData(localStorageVideos);
+
+    loadVideocards(aluraPlayData);
+
+    return;
+
+  }
 
   const apiPromise = connectWithTheAPI(urlOfAPI, optionsAPI, nameOfAPI);
 
@@ -34,7 +48,10 @@ export function getDataFromAPI($target) {
 
     }
 
-    aluraPlayData = data;
+    setLocalStorageData(localStorageVideos, data);
+    setLocalStorageData(localStorageUpdateFlag, 'false');
+
+    aluraPlayData = getLocalStorageData(localStorageVideos);
 
     loadVideocards(aluraPlayData);
 
@@ -134,6 +151,8 @@ function postDataInAPI(postOptionsAPI){
       return;
 
     }
+
+    setLocalStorageData(localStorageUpdateFlag, 'true');
 
     window.location.href = '../pages/envio-concluido.html';
 
