@@ -26,7 +26,7 @@ export function getDataFromAPI($target) {
 
   listOfVideos = $target;
 
-  if(updateStatus == 'false') {
+  if(updateStatus == 'do-not-update') {
 
     aluraPlayData = getLocalStorageData(localStorageVideos);
 
@@ -49,7 +49,7 @@ export function getDataFromAPI($target) {
     }
 
     setLocalStorageData(localStorageVideos, data);
-    setLocalStorageData(localStorageUpdateFlag, 'false');
+    setLocalStorageData(localStorageUpdateFlag, 'do-not-update');
 
     aluraPlayData = getLocalStorageData(localStorageVideos);
 
@@ -152,7 +152,7 @@ function postDataInAPI(postOptionsAPI){
 
     }
 
-    setLocalStorageData(localStorageUpdateFlag, 'true');
+    setLocalStorageData(localStorageUpdateFlag, 'do-the-update');
 
     window.location.href = '../pages/envio-concluido.html';
 
