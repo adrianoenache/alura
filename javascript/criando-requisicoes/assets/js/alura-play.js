@@ -4,7 +4,15 @@ Para os imports funcionem, é necessário que no HTML onde é importado
 o arquivo "app.js", o parâmetro "type" tenha o valor "module".
 
 */
-import { $getMySelector, createElementFromTemplateOnTarget, onTargetEventDoAction, setLocalStorageData, getLocalStorageData, connectWithTheAPI } from './common-functions.js';
+import {
+  $getMySelector,
+  createElementFromTemplateOnTarget,
+  onTargetEventDoAction,
+  setLocalStorageData,
+  getLocalStorageData,
+  connectWithTheAPI,
+  resolveApiPromise
+} from './common-functions.js';
 
 const nameOfAPI = 'AluraPlay';
 const urlOfAPI = 'http://localhost:3000/videos';
@@ -38,24 +46,7 @@ export function getDataFromAPI($target) {
 
   const apiPromise = connectWithTheAPI(urlOfAPI, optionsAPI, nameOfAPI);
 
-  apiPromise.then(data => {
-
-    if(!data) {
-
-      console.warn(`Erro na consulta da API ${nameOfAPI}`);
-
-      return;
-
-    }
-
-    setLocalStorageData(localStorageVideos, data);
-    setLocalStorageData(localStorageUpdateFlag, 'do-not-update');
-
-    aluraPlayData = getLocalStorageData(localStorageVideos);
-
-    loadVideocards(aluraPlayData);
-
-  });
+  resolveApiPromise(apiPromise, executeOnSuccessOfGetDataFromApi, `Erro na consulta da API ${nameOfAPI}`);
 
 }
 
@@ -142,21 +133,7 @@ function postDataInAPI(postOptionsAPI){
 
   const apiPromise = connectWithTheAPI(urlOfAPI, postOptionsAPI, nameOfAPI);
 
-  apiPromise.then(data => {
-
-    if(!data) {
-
-      console.warn(`Erro no post da API ${nameOfAPI}`);
-
-      return;
-
-    }
-
-    setLocalStorageData(localStorageUpdateFlag, 'do-the-update');
-
-    window.location.href = '../pages/envio-concluido.html';
-
-  });
+  resolveApiPromise(apiPromise, executeOnSuccessOfPostOfApi, `Erro no post da API ${nameOfAPI}`);
 
 }
 
@@ -179,3 +156,33 @@ function configPostOptionsAPI(titulo, descricao, url, imagem) {
   return optionsAPI;
 
 }
+
+function executeOnSuccessOfPostOfApi() {
+
+  setLocalStorageData(localStorageUpdateFlag, 'do-the-update');
+
+  window.location.href = '../pages/envio-concluido.html';
+
+}
+
+function executeOnSuccessOfGetDataFromApi(data) {
+
+  setLocalStorageData(localStorageVideos, data);
+  setLocalStorageData(localStorageUpdateFlag, 'do-not-update');
+
+  aluraPlayData = getLocalStorageData(localStorageVideos);
+
+  loadVideocards(aluraPlayData);
+
+}
+
+/*
+aluraPlayData.filter(data => {
+  let frase = data.titulo;
+  console.log('### ', frase);
+  console.log('### ', frase.search(/Teste/));
+
+  if(frase.search(/Teste/) == 0) return true;
+
+});
+*/

@@ -156,3 +156,21 @@ export async function connectWithTheAPI(urlAPI, optionsAPI, nameOfAPI = 'API') {
   }
 
 }
+
+export function resolveApiPromise(apiPromise, doThisActionOnSuccess, errorMessage = 'Erro na API') {
+
+  apiPromise.then(data => {
+
+    if(!data) {
+
+      console.warn(errorMessage);
+
+      return;
+
+    }
+
+    doThisActionOnSuccess(data);
+
+  });
+
+}
