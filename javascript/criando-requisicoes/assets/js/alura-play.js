@@ -45,7 +45,7 @@ export function getDataFromAPI($target) {
 
   const apiPromise = connectWithTheAPI(urlOfAPI, optionsAPI, nameOfAPI);
 
-  resolveApiPromise(apiPromise, executeOnSuccessOfGetDataFromApi, `Erro na consulta da API ${nameOfAPI}`);
+  resolveApiPromise(apiPromise, executeOnSuccessOfGetDataFromApi, `Erro na consulta da API ${nameOfAPI}`, executeOnFailOfGetDataFromApi);
 
 }
 
@@ -132,7 +132,7 @@ function postDataInAPI(postOptionsAPI){
 
   const apiPromise = connectWithTheAPI(urlOfAPI, postOptionsAPI, nameOfAPI);
 
-  resolveApiPromise(apiPromise, executeOnSuccessOfPostOfApi, `Erro no post da API ${nameOfAPI}`);
+  resolveApiPromise(apiPromise, executeOnSuccessOfPostOfApi, `Erro no post da API ${nameOfAPI}`, executeOnFailOfPostOfApi);
 
 }
 
@@ -263,14 +263,34 @@ function filterListOfVideos(whatDoSearch) {
 
 function termNotFound(term) {
 
-  listOfVideos.innerHTML = '';
-
   listOfVideos.innerHTML = `
     <li>
       <p>
         Ops!!! Não foi encontardo o termo "${term}"!
       </p>
     </li>
+  `;
+
+}
+
+function executeOnFailOfGetDataFromApi() {
+
+  listOfVideos.innerHTML = `
+    <li>
+      <p>
+        Ops!!! Não foi possível carregar os dados da API!
+      </p>
+    </li>
+  `;
+
+}
+
+function executeOnFailOfPostOfApi() {
+
+  $getMySelector('[data-form]').innerHTML = `
+    <p style="color: black;">
+      Ops!!! O serviço da API está indisponível no momento. Volte mais tarde!
+    </p>
   `;
 
 }
