@@ -94,6 +94,15 @@ body {
     cursor: pointer;
 }
 
+.remover-filtro {
+    background-color: #F9F9F9;
+    border: 1px solid rgb(211, 211, 211);
+    border-left: none;
+    color: var(--azul-escuro);
+    cursor: pointer;
+    padding: 0 15px;
+}
+
 .cabecalho__pesquisar {
     display: flex;
     justify-content: center;

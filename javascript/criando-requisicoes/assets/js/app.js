@@ -5,7 +5,7 @@
 
 */
 import { $getMySelector } from './common-functions.js';
-import { getDataFromAPI, getDataFromForm } from './alura-play.js';
+import { getDataFromAPI, getDataFromForm, filterTheVideos } from './alura-play.js';
 
 window.aluraPlayData = '';
 
@@ -15,6 +15,8 @@ const initCode = () => {
   const $dataFromForm = $getMySelector('[data-form]');
 
   if($dataLista) getDataFromAPI($dataLista);
+  if($dataLista) filterTheVideos();
+
   if($dataFromForm) getDataFromForm($dataFromForm);
 
 }

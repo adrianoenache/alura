@@ -27,8 +27,9 @@ const localStorageVideos = 'videos';
 const localStorageUpdateFlag = 'update-videos';
 
 let updateStatus = getLocalStorageData(localStorageUpdateFlag);
-
 let listOfVideos = '';
+let filterStatus = false;
+let previousSearch = '';
 
 export function getDataFromAPI($target) {
 
@@ -36,9 +37,7 @@ export function getDataFromAPI($target) {
 
   if(updateStatus == 'do-not-update') {
 
-    aluraPlayData = getLocalStorageData(localStorageVideos);
-
-    loadVideocards(aluraPlayData);
+    applyListOfVideosFromLocalStorage();
 
     return;
 
@@ -170,19 +169,108 @@ function executeOnSuccessOfGetDataFromApi(data) {
   setLocalStorageData(localStorageVideos, data);
   setLocalStorageData(localStorageUpdateFlag, 'do-not-update');
 
+  applyListOfVideosFromLocalStorage();
+
+}
+
+function applyListOfVideosFromLocalStorage() {
+
   aluraPlayData = getLocalStorageData(localStorageVideos);
 
   loadVideocards(aluraPlayData);
 
 }
 
-/*
-aluraPlayData.filter(data => {
-  let frase = data.titulo;
-  console.log('### ', frase);
-  console.log('### ', frase.search(/Teste/));
+export function filterTheVideos() {
 
-  if(frase.search(/Teste/) == 0) return true;
+  const searchField = $getMySelector('[data-search-field]');
+  const searchButton = $getMySelector('[data-search-button]');
+  const searchReset = $getMySelector('[data-search-reset]');
 
-});
-*/
+  if(!searchField) return;
+  if(!searchButton) return;
+  if(!searchReset) return;
+
+  let whatDoSearch = '';
+
+  onTargetEventDoAction(searchButton, 'click', event => {
+
+    event.preventDefault();
+
+    if(!searchField.value) return;
+
+    whatDoSearch = searchField.value;
+
+    if(whatDoSearch == previousSearch) return;
+
+    previousSearch = whatDoSearch;
+    filterStatus = true;
+
+    filterListOfVideos(whatDoSearch);
+
+  })
+
+  onTargetEventDoAction(searchReset, 'click', event => {
+
+    event.preventDefault();
+
+    if(!filterStatus) return;
+
+    searchField.value = '';
+    whatDoSearch = '';
+    previousSearch = '';
+    filterStatus = false;
+
+    applyListOfVideosFromLocalStorage();
+
+  })
+
+}
+
+function filterListOfVideos(whatDoSearch) {
+
+  let listFiltered = '';
+  let searchFor = `${whatDoSearch}`;
+
+  listFiltered = aluraPlayData.filter(data => {
+
+    let firstLocalToSearch = data.titulo;
+    let secondLocalToSearch = data.descricao;
+
+    if(firstLocalToSearch.search(searchFor) == 0) {
+
+      return true;
+
+    } else if(secondLocalToSearch.search(searchFor) == 0) {
+
+      return true;
+
+    }
+
+  });
+
+  if(listFiltered == '') {
+
+    termNotFound(whatDoSearch);
+
+    return;
+
+  }
+
+  loadVideocards(listFiltered);
+
+}
+
+function termNotFound(term) {
+
+  listOfVideos.innerHTML = '';
+
+  listOfVideos.innerHTML = `
+    <li>
+      <p>
+        Ops!!! Não foi encontardo o termo "${term}"!
+      </p>
+    </li>
+  `;
+
+}
