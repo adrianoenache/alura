@@ -136,7 +136,7 @@ const digitVerifier = (cpf, multiplier) => {
 */
 const confirmType = (sum) => {
 
-  if((11 - (sum % 11)) == 10) {
+  if((11 - (sum % 11)) >= 10) {
 
     return 0;
 
