@@ -6,6 +6,7 @@
 */
 import { $getMySelectors, onTargetEventDoAction } from './common-functions.js';
 import { validateCPF } from './validate-cpf.js';
+import { validateBornDate } from './validate-born-date.js';
 
 export function startFromValidation() {
 
@@ -27,9 +28,16 @@ function validateFied(field) {
 
   console.log('field = ', field.name)
 
-  if(field.name === 'cpf') {
+  if(field.name === 'cpf' && field.value.length >= 11) {
 
     validateCPF(field);
+
+  }
+
+
+  if(field.name === 'aniversario' && field.value != '') {
+
+    validateBornDate(field);
 
   }
 
