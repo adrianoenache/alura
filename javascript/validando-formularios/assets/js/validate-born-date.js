@@ -7,11 +7,17 @@
 */
 export const validateBornDate = (input) => {
 
-  const dateFromInput = new Date(input.value);
+  const fieldValue = input.value;
+
+  const dateFromInput = new Date(fieldValue);
   let message = '';
 
 
-  if(!ofLegalAge(dateFromInput)) {
+  if(fieldValue === '') {
+
+    message = 'O campo de data de nascimento não pode estar vazio.';
+
+  } else if(!ofLegalAge(dateFromInput)) {
 
     message = 'Você deve ser maior de idade para se cadastrar!';
 
