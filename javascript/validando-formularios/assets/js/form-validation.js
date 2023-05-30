@@ -4,13 +4,17 @@
   o arquivo 'app.js', o parâmetro 'type' tenha o valor 'module'.
 
 */
-import { $getMySelectors, onTargetEventDoAction } from './common-functions.js';
+import { $getMySelector, $getMySelectors, onTargetEventDoAction } from './common-functions.js';
 import { validateCPF } from './validate-cpf.js';
 import { validateBornDate } from './validate-born-date.js';
+import { submitForm } from './form-submit.js'
 
 export function startFromValidation() {
 
   const fieldsToValidate = $getMySelectors('[required]');
+  const formToSubmit = $getMySelector('[data-formulario]');
+
+  submitForm(formToSubmit)
 
   if(!fieldsToValidate) return;
 

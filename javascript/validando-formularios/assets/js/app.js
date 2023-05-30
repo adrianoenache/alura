@@ -7,8 +7,6 @@
 //import { $getMySelector } from './common-functions.js';
 import { startFromValidation } from './form-validation.js'
 
-window.aluraPlayData = '';
-
 const initCode = () => {
 
   startFromValidation();
