@@ -133,9 +133,8 @@
     border: 2px solid red;
 }
 
-.formulario__mensagem,
-.formulario__camera {
-    display: none;
+.hide {
+  display: none;
 }
 
 .formulario__mensagem--sucesso,

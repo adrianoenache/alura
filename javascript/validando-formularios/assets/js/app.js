@@ -6,10 +6,12 @@
 */
 //import { $getMySelector } from './common-functions.js';
 import { startFromValidation } from './form-validation.js'
+import { takePicture } from './camera.js'
 
 const initCode = () => {
 
   startFromValidation();
+  takePicture();
 
 }
 

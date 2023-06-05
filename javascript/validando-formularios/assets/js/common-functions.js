@@ -176,3 +176,22 @@ export function resolveApiPromise(apiPromise, doThisActionOnSuccess, errorMessag
   });
 
 }
+
+export function addCssClass(targetElement, cssClass) {
+
+  if(!targetElement.classList.contains(cssClass)) targetElement.classList.add(cssClass)
+
+}
+
+export function removeCssClass(targetElement, cssClass) {
+
+  if(targetElement.classList.contains(cssClass)) targetElement.classList.remove(cssClass)
+
+}
+
+export function toggleCssClass(targetElement, cssClass) {
+
+  targetElement.classList.toggle(cssClass)
+
+}
+
