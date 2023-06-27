@@ -7,15 +7,32 @@
 */
 export const validateCPF = (input) => {
 
-  const formatCPF = input.value.replace(/\D/g, '');
+  const fieldValue = input.value;
+
+  const formatCPF = fieldValue.replace(/\D/g, '');
 
   let message = '';
 
-  if(!checkCPFRepeatedNumbers(formatCPF) || !checkCPFStructure(formatCPF)) {
+  console.log('## fieldValue = ', fieldValue === '')
+
+  if(fieldValue === '') {
+
+    message = 'O campo de CPF não pode estar vazio.';
+
+  } else if(fieldValue.length < 11) {
+
+    message = 'O CPF digitado deve ter no minimo 11 digitos';
+
+  } else if(!checkCPFRepeatedNumbers(formatCPF) || !checkCPFStructure(formatCPF)) {
 
     message = 'O CPF digitado não é valido.';
 
   }
+
+
+
+  console.log('## fieldValue < 11 = ', fieldValue < 11)
+  console.log('## fieldValue = ', fieldValue)
 
   input.setCustomValidity(message);
 
