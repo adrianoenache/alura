@@ -3,6 +3,9 @@ Repositório destinado ao código de estudo na plataforma Alura.
 
 ## Certificados
 
+### Formação
+* [Desenvolva aplicações web com javascript](https://cursos.alura.com.br/user/adriano-enache/degree-javascript-front-end-374365/certificate)
+
 ### HTML e CSS
 
 * [HTML e CSS: Ambientes de desenvolvimento, estrutura de arquivos e tags](https://cursos.alura.com.br/certificate/adriano-enache/html-css-ambiente-arquivos-tags)
