@@ -3,6 +3,12 @@ Repositório destinado ao código de estudo na plataforma Alura.
 
 ## Certificados
 
+### HTML e CSS
+
+* [HTML e CSS: Ambientes de desenvolvimento, estrutura de arquivos e tags](https://cursos.alura.com.br/certificate/adriano-enache/html-css-ambiente-arquivos-tags)
+
+### Javascript
+
 * [Expressões Regulares: Capturando textos de forma mágica](https://cursos.alura.com.br/certificate/adriano-enache/expressoes-regulares)
 * [JavaScript na web: Armazenando dados no navegador](https://cursos.alura.com.br/certificate/adriano-enache/javascript-web-armazenando-dados-navegador)
 * [JavaScript na web: Validação de formulários e HTML5](https://cursos.alura.com.br/certificate/adriano-enache/javascript-web-validacao-formularios-html5)
