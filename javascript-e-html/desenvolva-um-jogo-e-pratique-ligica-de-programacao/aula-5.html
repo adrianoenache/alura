@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 5</title>
+</head>
+<body>
+  <script>
+
+    function emptyLine(count = 2) {
+      for(let i = 0; i < count; i++) {
+        document.write("<br>")
+      }
+    };
+
+    function printText(txt, space = 1) {
+      document.write(`<p>${txt}</p>`);
+      emptyLine(space);
+    };
+
+    function calcImc(weight, height) {
+      return weight / (height * height);
+    }
+
+    const persons = [
+      {
+        person: "Adriano",
+        weight: 100,
+        height: 1.8
+      },
+      {
+        person: "Leandro",
+        weight: 80,
+        height: 1.75
+      }
+    ]
+
+    let personWeight = 90;
+    let personHeight = 1.80;
+    let personImc = calcImc(personWeight, personHeight);
+    let messageToPrint = `O calculo do IMC para uma pessoa com
+    o peso <strong>${personWeight}Kg</strong> e alturam de
+    <strong>${personHeight}m</strong> é de <strong>${personImc}</strong>`;
+
+    printText(messageToPrint, 3);
+
+    persons.forEach(item => {
+      personWeight = item.weight;
+      personHeight = item.height;
+      personImc = calcImc(personWeight, personHeight);
+      messageToPrint = `O calculo do IMC do <strong>${item.person}</strong> com
+      o peso <strong>${personWeight}Kg</strong> e alturam de
+      <strong>${personHeight}m</strong> é de <strong>${personImc}</strong>`;
+      printText(messageToPrint);
+    });
+
+  </script>
+</body>
+</html>
