@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 6</title>
+</head>
+<body>
+  <script>
+
+    function emptyLine(count = 2) {
+      for(let i = 0; i < count; i++) {
+        document.write("<br>")
+      }
+    };
+
+    function printText(txt, space = 1) {
+      document.write(`<p>${txt}</p>`);
+      emptyLine(space);
+    };
+
+    let langTranslation = 'en';
+
+    function setPageLanguage() {
+      langTranslation = document.documentElement.lang.replace('-','').toLowerCase();
+    }
+
+    setPageLanguage();
+
+    const pointsOfWins = 3;
+    const pointsOfDraws = 1;
+    const pointsOfLastYear = 10;
+    const translations = {
+      en: {
+        pageLanguage: 'Page language is en',
+        getWins: 'How many wins?',
+        getDraws: 'How many draws?',
+        consoleWins: 'Number of wins:',
+        consoleDraws: 'Number of draws:',
+        consolePoints: 'The total of points are:',
+        betterThan: 'Your punctuation are better than last year.',
+        sameThan: 'Your punctuation are same than last year.',
+        worseThan: 'Your punctuation are worse than last year.',
+        nextYear: 'Until in next year.'
+      },
+      ptbr: {
+        pageLanguage: 'O idioma da página é pt-BR',
+        getWins: 'Quantas vitórias?',
+        getDraws: 'Quantos empates?',
+        consoleWins: 'Número de vitórias:',
+        consoleDraws: 'Número de sorteios:',
+        consolePoints: 'O total de pontos é:',
+        betterThan: 'Sua pontuação está melhor que no ano passado.',
+        sameThan: 'Sua pontuação é a mesma do ano passado.',
+        worseThan: 'Sua pontuação está pior do que no ano passado.',
+        nextYear: 'Até o próximo ano.'
+      }
+    };
+
+    const message = {
+      pageLanguage: translations[langTranslation].pageLanguage,
+      getWins: translations[langTranslation].getWins,
+      getDraws: translations[langTranslation].getDraws,
+      consoleWins: translations[langTranslation].consoleWins,
+      consoleDraws: translations[langTranslation].consoleDraws,
+      consolePoints: translations[langTranslation].consolePoints,
+      betterThan: translations[langTranslation].betterThan,
+      sameThan: translations[langTranslation].sameThan,
+      worseThan: translations[langTranslation].worseThan,
+      nextYear: translations[langTranslation].nextYear
+    };
+
+    console.log(message.pageLanguage);
+
+    let wins = parseInt(prompt(message.getWins));
+    console.log(`${message.consoleWins} ${wins || 0}`);
+
+    let draws = parseInt(prompt(message.getDraws));
+    console.log(`${message.consoleDraws} ${draws || 0}`);
+
+    function calcPoints(wins, draws) {
+      return (wins * pointsOfWins) + (draws * pointsOfDraws);
+    }
+
+    let points = calcPoints(wins, draws) || 0;
+    console.log(`${message.consolePoints} ${points || 0}`);
+
+    if(points > pointsOfLastYear) printText(message.betterThan);
+    if(points == pointsOfLastYear) printText(message.sameThan);
+    if(points < pointsOfLastYear) printText(message.worseThan);
+
+    printText(message.nextYear);
+
+  </script>
+</body>
+</html>
