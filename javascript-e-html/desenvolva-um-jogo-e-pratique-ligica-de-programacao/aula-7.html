@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 7</title>
+</head>
+<body>
+  <script>
+
+    function emptyLine(count = 2) {
+      for(let i = 0; i < count; i++) {
+        document.write("<br>")
+      }
+    };
+
+    function printText(txt, space = 1) {
+      document.write(`<p>${txt}</p>`);
+      emptyLine(space);
+    };
+
+    const worldCup = 1930;
+    let worldCupYears = worldCup;
+    let currentDate = new Date();
+
+    while(worldCupYears <= currentDate.getFullYear()) {
+
+      console.log(`Years of word cup is: ${worldCupYears}`);
+
+      worldCupYears = worldCupYears + 4;
+
+    }
+
+
+  </script>
+</body>
+</html>
