@@ -19,6 +19,20 @@
       emptyLine(space);
     };
 
+    let howManygrades = 0;
+    let gradesTotal = 0;
+    let gradeAvarage = 0;
+    let countGrades = 1;
+
+    howManygrades = parseInt(prompt('How many grades?'));
+
+    while(countGrades <= howManygrades) {
+      gradesTotal = gradesTotal + parseInt(parseInt(prompt(`Inform grade ${countGrades}`)));
+      countGrades++;
+    }
+
+    printText(`The grades average are = ${gradesTotal / howManygrades}`);
+
     const worldCup = 1930;
     let worldCupYears = worldCup;
     let currentDate = new Date();
@@ -28,6 +42,16 @@
       console.log(`Years of word cup is: ${worldCupYears}`);
 
       worldCupYears = worldCupYears + 4;
+
+    }
+
+    for(let x = 1; x <= 10; x++) {
+
+      var multiplier = x;
+
+      for(let y = 1; y <= 10; y++) {
+        printText(`${multiplier} x ${y} = ${multiplier * y}`)
+      }
 
     }
 
