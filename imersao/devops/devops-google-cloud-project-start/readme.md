@@ -433,6 +433,147 @@ jobs:
 
 Veja o resultado da aula 2 em [Build do CI do Alura Imersão DevOps](https://github.com/adrianoenache/alura/actions/runs/16060348123/job/45324690942).
 
+## Instalando GCloud CLI no WSL2 no Ubuntu-24.04
+
+Guia de instalação da [CLI](https://cloud.google.com/sdk/docs/install#deb) Google Cloud.
+
+Algumas coisas diferentes do video da imersão aconteceram. Primeiro não consegui altenticar executando apenas com o comando `gcloud init` houve um erro e a CLI mostrou a opção de usar a flag `--no-browser`, alguns passos a mais e deu tudo certo. Outra coisa foi que eu não precisei digitar o ID pois a CLI detectou o projeto criado e me deu a opção de o selecionar.
+
+```Bash
+gcloud init --no-browser
+
+Welcome! This command will take you through the configuration of gcloud.
+
+Your current configuration has been set to: [default]
+
+You can skip diagnostics next time by using the following flag:
+  gcloud init --skip-diagnostics
+
+Network diagnostic detects and fixes local network connection issues.
+Checking network connection...done.                                                               
+Reachability Check passed.
+Network diagnostic passed (1/1 checks passed).
+
+You must sign in to continue. Would you like to sign in (Y/n)?  Y
+
+You are authorizing gcloud CLI without access to a web browser. Please run the following command on a machine with a web browser and copy its output back here. Make sure the installed gcloud version is 372.0.0 or newer.
+
+gcloud auth login --remote-bootstrap="https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=32555940559.apps.googleusercontent.com&scope=openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fappengine.admin+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fsqlservice.login+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcompute+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Faccounts.reauth&state=wviAUFU5pNtEDX9zDR7y9bc29xVya0&access_type=offline&code_challenge=uO63YGll2hckBUd-86zGgsSh0dQ_tWXOZL4uzJyNEoM&code_challenge_method=S256&token_usage=remote"
+
+Enter the output of the above command: ### Ha! ha! ha! você não sabe a senha ha! ha! ha! ###
+
+Pick cloud project to use: 
+ [1] alura-imersao-devops-464711
+ [2] Enter a project ID
+ [3] Create a new project
+Please enter numeric choice or text value (must exactly match list item):  1
+
+Your current project has been set to: [alura-imersao-devops-464711].
+
+Not setting default zone/region (this feature makes it easier to use
+[gcloud compute] by setting an appropriate default value for the
+--zone and --region flag).
+See https://cloud.google.com/compute/docs/gcloud-compute section on how to set
+default compute region and zone manually. If you would like [gcloud init] to be
+able to do this for you the next time you run it, make sure the
+Compute Engine API is enabled for your project on the
+https://console.developers.google.com/apis page.
+
+Created a default .boto configuration file at [/home/adrianoenache/.boto]. See this file and
+[https://cloud.google.com/storage/docs/gsutil/commands/config] for more
+information about configuring Google Cloud Storage.
+The Google Cloud CLI is configured and ready to use!
+
+* Commands that require authentication will use ena.adr@gmail.com by default
+* Commands will reference project `alura-imersao-devops-464711` by default
+Run `gcloud help config` to learn how to change individual settings
+
+This gcloud configuration is called [default]. You can create additional configurations if you work with multiple accounts and/or projects.
+Run `gcloud topic configurations` to learn more.
+
+Some things to try next:
+
+* Run `gcloud --help` to see the Cloud Platform services you can interact with. And run `gcloud help COMMAND` to get help on any gcloud command.
+* Run `gcloud topic --help` to learn about advanced features of the CLI like arg files and output formatting
+* Run `gcloud cheat-sheet` to see a roster of go-to `gcloud` commands.
+```
+
+Aqui tive um segundo "problema" que não é um problema na execuão da CLI na hora de construir o container deu erro porque estou usando os arquivos do Podman `Containerfile` e `.containerignore`. Como estamos usando os arquivos fonte do exercicio para criar o container e não uma imagem ja criada isso aconteceu. A solução foi simplesmente duplicar os arquivos com os nomes `Dockerfile` e `.dockerignore` usados pelo Docker e tudo funcionou.
+
+```bash
+gcloud run deploy --port=8000
+
+Deploying from source. To deploy a container use [--image]. See https://cloud.google.com/run/docs/deploying-source-code for more details.
+Source code location (/home/adrianoenache/gitHub-adrianoenache/alura/imersao/devops/devops-google-cloud-project-start):  
+Next time, you can use `--source .` argument to deploy the current directory.
+
+Service name (devops-google-cloud-project-start):  alura-imersao-devops
+Please specify a region:
+ [1] africa-south1
+ [2] asia-east1
+ [3] asia-east2
+ [4] asia-northeast1
+ [5] asia-northeast2
+ [6] asia-northeast3
+ [7] asia-south1
+ [8] asia-south2
+ [9] asia-southeast1
+ [10] asia-southeast2
+ [11] australia-southeast1
+ [12] australia-southeast2
+ [13] europe-central2
+ [14] europe-north1
+ [15] europe-north2
+ [16] europe-southwest1
+ [17] europe-west1
+ [18] europe-west10
+ [19] europe-west12
+ [20] europe-west2
+ [21] europe-west3
+ [22] europe-west4
+ [23] europe-west6
+ [24] europe-west8
+ [25] europe-west9
+ [26] me-central1
+ [27] me-central2
+ [28] me-west1
+ [29] northamerica-northeast1
+ [30] northamerica-northeast2
+ [31] northamerica-south1
+ [32] southamerica-east1
+ [33] southamerica-west1
+ [34] us-central1
+ [35] us-east1
+ [36] us-east4
+ [37] us-east5
+ [38] us-south1
+ [39] us-west1
+ [40] us-west2
+ [41] us-west3
+ [42] us-west4
+ [43] cancel
+Please enter numeric choice or text value (must exactly match list item):  32
+
+To make this the default region, run `gcloud config set run/region southamerica-east1`.
+
+Allow unauthenticated invocations to [alura-imersao-devops] (y/N)?  Y
+
+Building using Dockerfile and deploying container to Cloud Run service [alura-imersao-devops] in project [alura-imersao-devops-464711] region [southamerica-east1]
+✓ Building and deploying new service... Done.                                                                                                                                                                                
+  ✓ Uploading sources...                                                                                                                                                                                                     
+  ✓ Building Container... Logs are available at [https://console.cloud.google.com/cloud-build/builds;region=southamerica-east1/b0a6cd10-468b-42fd-a2de-04fc2df11a9e?project=294538579546].                                   
+  ✓ Creating Revision...                                                                                                                                                                                                     
+  ✓ Routing traffic...                                                                                                                                                                                                       
+  ✓ Setting IAM Policy...                                                                                                                                                                                                    
+Done.                                                                                                                                                                                                                        
+Service [alura-imersao-devops] revision [alura-imersao-devops-00001-fcm] has been deployed and is serving 100 percent of traffic.
+Service URL: https://alura-imersao-devops-294538579546.southamerica-east1.run.app
+```
+
+[Aplicação da Alura imersão DevOps no Google Cloud](https://alura-imersao-devops-294538579546.southamerica-east1.run.app/docs)
+
+![alt Abrir o WSL no VSCode](./readme-assets/alura-imersao-devops-google-cloud.avif)
+
 ## Estrutura do Projeto API de gestão escolar
 
 - **app.py**: Arquivo principal da aplicação FastAPI.
