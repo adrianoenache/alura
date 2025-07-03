@@ -406,6 +406,33 @@ keep set()
 ['podman', 'volume', 'ls', '--noheading', '--filter', 'label=io.podman.compose.project=devops-google-cloud-project-start', '--format', '{{.Name}}']
 ```
 
+## Criando CI no GitHub Actions
+
+Crie as pastas na raiz do seu repositório `.github/workflows/` com o arquivo `docker-image.yml` com o conteúdo abaixo.
+
+```yml
+name: Docker Image CI Imersão DevOps
+
+on:
+  push:
+    branches: [ "nomeDoBranch" ]
+  pull_request:
+    branches: [ "nomeDoBranch" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image of Imersão DevOps
+      run: docker build localDoBuild --file localDoContainerfile --tag alura-imersao-devops:$(date +%s)
+```
+
+> **Dica:** Não esqueça de colocar os valores corretos em `nomeDoBranch`, `localDoBuild` e `localDoContainerfile`. Veja neste [arquivo de exemplo](https://github.com/adrianoenache/alura/blob/imersao-devops/.github/workflows/docker-image.yml).
+
+Veja o resultado da aula 2 em [Build do CI do Alura Imersão DevOps](https://github.com/adrianoenache/alura/actions/runs/16060348123/job/45324690942).
+
 ## Estrutura do Projeto API de gestão escolar
 
 - **app.py**: Arquivo principal da aplicação FastAPI.
