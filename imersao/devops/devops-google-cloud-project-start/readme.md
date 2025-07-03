@@ -313,6 +313,7 @@ Veja os containers em execução com o comando `podman ps`
 
 ```Docker
 podman ps
+
 CONTAINER ID  IMAGE                           COMMAND               CREATED        STATUS        PORTS                   NAMES
 102dd9fd0b9a  localhost/imersaodevops:latest  uvicorn app:app -...  2 minutes ago  Up 2 minutes  0.0.0.0:8000->8000/tcp  hungry_galois
 ```
@@ -324,6 +325,86 @@ podman stop 102dd9fd0b9a
 ```
 
 > **Dica:** Para mais comandos consulte a documentação na seção links no topo.
+
+Crie o arquivo `compose.yml` com o conteúdo abaixo. Este arquivo contém as informações para execução do podman-compose.
+
+```yml
+services:
+  app:
+    build: .
+    container_name: imersao-devops
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+```
+
+Execute o comando `podman-compose up -d` para criar e iniciar a execução do container.
+
+```bash
+podman-compose up -d
+
+podman-compose version: 1.0.6
+['podman', '--version', '']
+using podman version: 4.9.3
+** excluding:  set()
+['podman', 'inspect', '-t', 'image', '-f', '{{.Id}}', 'devops-google-cloud-project-start_app']
+['podman', 'ps', '--filter', 'label=io.podman.compose.project=devops-google-cloud-project-start', '-a', '--format', '{{ index .Labels "io.podman.compose.config-hash"}}']
+['podman', 'network', 'exists', 'devops-google-cloud-project-start_default']
+podman run --name=imersao-devops -d --label io.podman.compose.config-hash=32905d205708eaf1fb5cbaec2351b729dba602b12dfde152876afc891fe52bfd --label io.podman.compose.project=devops-google-cloud-project-start --label io.podman.compose.version=1.0.6 --label PODMAN_SYSTEMD_UNIT=podman-compose@devops-google-cloud-project-start.service --label com.docker.compose.project=devops-google-cloud-project-start --label com.docker.compose.project.working_dir=/home/adrianoenache/gitHub-adrianoenache/alura/imersao/devops/devops-google-cloud-project-start --label com.docker.compose.project.config_files=compose.yml --label com.docker.compose.container-number=1 --label com.docker.compose.service=app -v /home/adrianoenache/gitHub-adrianoenache/alura/imersao/devops/devops-google-cloud-project-start:/app --net devops-google-cloud-project-start_default --network-alias app -p 8000:8000 devops-google-cloud-project-start_app
+5434448987d70ed3cf4724c1c54c17af863e4604f4d6a594480f54c8dd1387a9
+exit code: 0
+
+podman ps
+
+CONTAINER ID  IMAGE                                                   COMMAND               CREATED        STATUS        PORTS                   NAMES
+922d0290bef0  localhost/devops-google-cloud-project-start_app:latest  uvicorn app:app -...  8 seconds ago  Up 9 seconds  0.0.0.0:8000->8000/tcp  imersao-devops
+```
+
+Pare a execução do container com o comando `podman-compose stop`
+
+```bash
+podman-compose stop
+
+podman-compose version: 1.0.6
+['podman', '--version', '']
+using podman version: 4.9.3
+podman stop -t 10 imersao-devops
+imersao-devops
+exit code: 0
+```
+
+Inicie a execução do container com o comando `podman-compose start`, caso use o comando `podman-compose up -d` o container será iniciado mas também irá mostrar um erro pois o container *imersao-devops* já foi criado.
+
+```bash
+podman-compose start
+
+podman-compose version: 1.0.6
+['podman', '--version', '']
+using podman version: 4.9.3
+podman start imersao-devops
+imersao-devops
+exit code: 0
+```
+
+Para destruir o container use o comando `podman-compose down -v`.
+
+```bash
+podman-compose down -v
+
+podman-compose version: 1.0.6
+['podman', '--version', '']
+using podman version: 4.9.3
+** excluding:  set()
+podman stop -t 10 imersao-devops
+imersao-devops
+exit code: 0
+podman rm imersao-devops
+imersao-devops
+exit code: 0
+keep set()
+['podman', 'volume', 'ls', '--noheading', '--filter', 'label=io.podman.compose.project=devops-google-cloud-project-start', '--format', '{{.Name}}']
+```
 
 ## Estrutura do Projeto API de gestão escolar
 
