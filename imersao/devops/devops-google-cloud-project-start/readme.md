@@ -42,6 +42,7 @@ Verifique a instalação executando no PowerShell o comando `wsl --version`.
 
 ```powershell
 wsl --version
+
 Versão do WSL: 2.5.9.0
 Versão do kernel: 6.6.87.2-1
 Versão do WSLg: 1.0.66
@@ -59,6 +60,7 @@ O comando `wsl --list` lista as distribuições instaladas e o comando `wsl --li
 
 ```powershell
 wsl --list --online
+
 A seguir está uma lista de distribuições válidas que podem ser instaladas.
 Instale usando 'wsl.exe --install <Distro>'.
 
@@ -99,7 +101,7 @@ Em seguida clique no ícone no VSCode na canto inferior esquerdo para abrir o me
 
 ![alt Abrir o WSL no VSCode](./readme-assets/vscode-open-wsl.avif)
 
-> **Atenção:** Cada distribuição tem o seu próprio sistema de arquivos e o que está instalado e configurado em uma não estárá na outra.
+> **Atenção:** Cada distribuição tem o seu próprio sistema de arquivos e o que está instalado e configurado em uma não vai estar na outra.
 
 **Parabéns!!!** Você está rodando um Linux dentro do Windows.
 
@@ -117,6 +119,7 @@ Agora vamos executar os comandos `update`, `full-upgrade` e `install`.
 
 ```Bash
 apt --help
+
 apt 2.8.3 (amd64)
 Usage: apt [options] command
 
@@ -248,13 +251,13 @@ Se tudo correu bem acesse a página pelo link abaixo.
 
 [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
-Aqui você pode testár todos os endpoints da API de forma interativa.
+Aqui você pode testar todos os endpoints da API de forma interativa.
 
 ![alt Abrir o WSL no VSCode](./readme-assets/sem-podman.avif)
 
 ### Executando o projeto com o Podman
 
-Crie o arquivo `.containerignore` com o conteúdo abaixo. O arquivo de ignore irá fazer com que os caminhos declarados não sejam adicionados na construção da imagem.
+Crie o arquivo `.containerignore` com o conteúdo abaixo. O arquivo de ignore irá fazer com que os caminhos declarados não sejam adicionados na construção da imagem do container.
 
 ```Docker
 # Paths to ignore
@@ -262,7 +265,7 @@ __pycache__
 venv
 ```
 
-Crie o arquivo `.Containerfile` com o conteúdo abaixo. Este arquivo contém as informações para a construção da imagem.
+Crie o arquivo `.Containerfile` com o conteúdo abaixo. Este arquivo contém as informações para a construção da imagem do container.
 
 ```Docker
 FROM python:3.13.4-alpine3.22
