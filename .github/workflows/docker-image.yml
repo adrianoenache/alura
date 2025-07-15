@@ -1,0 +1,16 @@
+name: Docker Image CI Imersão DevOps
+
+on:
+  push:
+    branches: [ "imersao-devops" ]
+  pull_request:
+    branches: [ "imersao-devops" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image of Imersão DevOps
+      run: docker build ./imersao/devops/devops-google-cloud-project-start/ --file ./imersao/devops/devops-google-cloud-project-start/Containerfile --tag alura-imersao-devops:$(date +%s)
